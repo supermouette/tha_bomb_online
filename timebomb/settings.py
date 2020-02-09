@@ -25,7 +25,7 @@ SECRET_KEY = 'r5y-y6y)62!1#-saf1_u2itr-7-$go0=5en%01n42hwowta3pq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['legit.engineer', 'supermouette.net']
 
 
 # Application definition
