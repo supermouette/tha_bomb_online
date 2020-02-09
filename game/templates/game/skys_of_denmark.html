@@ -1,0 +1,31 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Skys of Denmark</title>
+  <link rel="stylesheet" href="{% static 'game/default_design.css' %}">
+</head>
+<body>
+    <div id="skybox">
+        <h1>Skys of denmark</h1>
+        <p>During my precious days in denmark, I was able to witness the great diversity of denmark skys during the day.</p>
+        <p> I take one high resolution photo of the sky everyday. You have here every photo of the month.</p>
+        <p> The prevision image was computer-generated with a complex neural network.</p>
+        <div>
+            <div class="day">
+                <p class="label">prevision for <br>tomorrow </p>
+                <div class="sky" style="background-color:rgb({{tomorrow.color}}, {{tomorrow.color}}, {{tomorrow.color}})"></div>
+            </div>
+            {% for day in skys %}
+                <div class="day">
+                <p class="label"> {{day.day}}/{{day.month}} </p>
+                <div class="sky" style="background-color:rgb({{day.color}}, {{day.color}}, {{day.color}})"></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br> <br> <br>
+    <footer> don't worry, it should get better soon (the website, not the weather)</footer>
+</body>
+</html>

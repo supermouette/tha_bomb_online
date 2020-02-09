@@ -1,0 +1,18 @@
+#skybox{
+    margin: auto;
+    width: 70%;
+}
+
+.sky{
+    height:100px;
+    width:100px;
+
+}
+
+.label{
+
+}
+
+.day{
+    display: inline-block;
+}
