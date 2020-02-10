@@ -33,3 +33,7 @@ class Sky(models.Model):
     color = models.IntegerField()
     day = models.IntegerField()
     month = models.IntegerField()
+    year = models.IntegerField()
+
+    def __str__(self):
+        return str(self.day) + '/' + str(self.month) + " ("+str(self.color) + ")"
