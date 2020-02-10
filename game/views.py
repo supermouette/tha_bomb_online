@@ -22,7 +22,7 @@ def skys_of_denmark(request):
             yesterday = now - datetime.timedelta(days=1)
             Sky.objects.filter(month=yesterday.month).delete()
 
-    days = Sky.objects.order_by("day")
+    days = Sky.objects.order_by("-day")
     if days.count() != now.day:
         days_nb = [d.day for d in days]
         for i in range(1, now.day):
