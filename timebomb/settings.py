@@ -76,11 +76,14 @@ WSGI_APPLICATION = 'timebomb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'timebomb',
+        'USER': 'django',
+        'PASSWORD': 'M}3&YrJLy-=`2<V4',
+        'HOST': '40.89.129.90',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
