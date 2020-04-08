@@ -13,7 +13,7 @@ def index(request):
 
 def skys_of_denmark(request):
     import datetime
-    from .models import Sky
+    from game.models import Sky
     from random import randrange
 
     if request.user.is_authenticated:
