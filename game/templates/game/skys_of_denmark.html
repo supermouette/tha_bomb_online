@@ -1,12 +1,7 @@
-{% load static %}
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Skys of Denmark</title>
-  <link rel="stylesheet" href="{% static 'game/default_design.css' %}">
-</head>
-<body>
+{% extends 'game/base.html' %}
+
+{% block title %} Skys of Denmark {% endblock %}
+{% block content %}
     <div id="skybox">
         <h1>Skys of denmark</h1>
         <p>During my precious days in denmark, I was able to witness the great diversity of denmark skys during the day.</p>
@@ -25,7 +20,6 @@
             {% endfor %}
         </div>
     </div>
-    <br> <br> <br>
-    <footer> don't worry, it should get better soon (the website, not the weather)</footer>
-</body>
-</html>
+{% endblock %}
+
+{% block footer %} (the website, not the weather) {% endblock %}

@@ -16,3 +16,14 @@
 .day{
     display: inline-block;
 }
+
+footer{
+    margin-top: 50px;
+}
+
+header{
+    color: white;
+    background-color: #555;
+    font-size: 2em;
+    font-weight: bold;
+}

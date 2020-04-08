@@ -1,17 +1,9 @@
-{% load static %}
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Index</title>
-  <link rel="stylesheet" href="{% static 'default_design.css' %}">
-</head>
-<body>
+{% extends 'game/base.html' %}
+
+{% block title %} Index {% endblock %}
+{% block content %}
     <h1> Index</h1>
     <p>Heyyyyy</p>
     <p> <a href="{% url 'skys' %}" > Skys of Denmark</a></p>
     <p> (soon) Time Bomb online</p>
-    <br> <br> <br>
-    <footer> don't worry, it should get better soon</footer>
-</body>
-</html>
+{% endblock %}

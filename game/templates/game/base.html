@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+     <link rel="stylesheet" href="{% static 'game/default_design.css' %}">
+</head>
+<body>
+    <header> This a header </header>
+    {% block content %}
+    {% endblock %}
+    <footer> don't worry, it should get better soon {% block footer %} {% endblock %}</footer>
+</body>
+</html>
