@@ -4,10 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}</title>
-     <link rel="stylesheet" href="{% static 'game/default_design.css' %}">
+    <link rel="stylesheet" href="{% static 'game/default_design.css' %}">
 </head>
 <body>
-    <header> This a header </header>
+    <header>
+        <h1> <a href="{% url 'index' %}">This a header.</a></h1>
+        {% if user and not user.is_anonymous %}
+            {% if user.is_superuser %}
+                <div class="userinfo">Welcome {{user}}. <a href="{% url 'admin:index' %}">Admin panel </a> / <a href="{% url 'logout' %}">Log out</a></div>
+            {% else %}
+                <div class="userinfo">Welcome {{user}}. <a href="{% url 'logout' %}">Log out</a></div>
+            {% endif %}
+        {% else %}
+        <div class="userinfo">You are not log in. <a href="{% url 'login' %}">Log in</a> or <a href="{% url 'signup' %}">register</a> </div>
+        {% endif %}
+    </header>
     {% block content %}
     {% endblock %}
     <footer> don't worry, it should get better soon {% block footer %} {% endblock %}</footer>
