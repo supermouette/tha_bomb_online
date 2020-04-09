@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Game(models.Model):
@@ -20,6 +21,7 @@ class Game(models.Model):
     next_player = models.ForeignKey('Player', on_delete=models.SET_NULL, default=None, blank=True, null=True,
                                     related_name='+')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=UNINITIALIZED)
+    name = models.CharField(max_length=30)
 
     def get_players(self):
         return Player.objects.filter(game=self)
@@ -107,11 +109,11 @@ class Player(models.Model):
     TEAM_CHOICES = ((BLUE, "Blue"), (RED, "Red"))
 
     team = models.CharField(max_length=1, choices=TEAM_CHOICES, null=True, blank=True)
-    name = models.CharField(max_length=20)
     game = models.ForeignKey(Game, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.user.name
 
     def discover_card(self, card):
         if self.game.next_player != self:
