@@ -35,4 +35,5 @@ def create_game(request):
 
 
 def waiting_room(request):
+    context = {}
     return HttpResponse(200)
