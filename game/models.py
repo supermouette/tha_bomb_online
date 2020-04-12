@@ -101,6 +101,9 @@ class Game(models.Model):
         self.save(update_fields="status")
         return self.status
 
+    def __str__(self):
+        return self.name
+
 
 class Player(models.Model):
 
@@ -109,11 +112,11 @@ class Player(models.Model):
     TEAM_CHOICES = ((BLUE, "Blue"), (RED, "Red"))
 
     team = models.CharField(max_length=1, choices=TEAM_CHOICES, null=True, blank=True)
-    game = models.ForeignKey(Game, on_delete=models.SET_NULL, null=True, blank=True)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
     def discover_card(self, card):
         if self.game.next_player != self:

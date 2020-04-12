@@ -1,0 +1,34 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} Index {% endblock %}
+{% block content %}
+    <h1>Waiting room</h1>
+
+    <p hidden id="url_room_list">{% url 'room_list' %}</p>
+    <h2> Join existing game</h2>
+    <button id="refresh_button"> refresh </button>
+    <table>
+        <thead>
+            <tr>
+                <th>Room name</th>
+                <th>Number of players</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <h2>Create your own</h2>
+    <form method="post" action="{% url 'create_game' %}">
+        {% csrf_token %}
+        <label for="name">Game name: </label>
+        <input type="text" name="name" id="name" required>
+        <input type="submit" value="Create and join game">
+    </form>
+
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="{% static 'game/waiting_room.js' %}"></script>
+{% endblock %}

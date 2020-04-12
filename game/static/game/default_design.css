@@ -52,3 +52,7 @@ h1 a{
 .userinfo a{
     color: white;
 }
+
+td{
+    text-align: center;
+}

@@ -5,5 +5,9 @@
     <h1> Index</h1>
     <p>Heyyyyy</p>
     <p> <a href="{% url 'skys' %}" > Skys of Denmark</a></p>
-    <p> (soon) Time Bomb online</p>
+    <p> (soon) Time Bomb online
+        {% if user and not user.is_anonymous %}
+            <a href="{% url 'waiting_room' %}">(waiting room)</a>
+        {% endif %}
+    </p>
 {% endblock %}
