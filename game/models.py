@@ -158,7 +158,7 @@ class Player(models.Model):
 
     def get_card_left_binary(self):
         final_number = 0
-        cards = list(Card.objects.filter(game=self.game, player=self))
+        cards = list(Card.objects.filter(game=self.game, player=self, discovered=False))
         for card in cards:
             final_number += 2**card.order_in_hand
         return final_number
