@@ -24,3 +24,5 @@ function is_init(){
         }
     })
 }
+
+setTimeout(is_init, 2000);
