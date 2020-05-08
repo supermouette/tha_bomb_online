@@ -102,8 +102,8 @@ function refresh(){
             current_player.classList.add('should_claim');
             for (button of current_player.getElementsByTagName('button')){
                 button.disabled = false;
-                document.getElementById('wire_nb').value = 0;
-                document.getElementById('bomb_nb').value = 0;
+                //document.getElementById('wire_nb').value = 0;
+                //document.getElementById('bomb_nb').value = 0;
             }
         }
         else{ // if current player have already claimed
