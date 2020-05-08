@@ -128,13 +128,13 @@ function refresh(){
                     other.getElementsByClassName('claim')[0].innerHTML = "nothing";
                 }
                 else if (claim_bomb==0){
-                    other.getElementsByClassName('claim')[0].innerHTML = claim_wire + "wire(s)";
+                    other.getElementsByClassName('claim')[0].innerHTML = claim_wire + " wire(s)";
                 }
                 else if (claim_wire==0){
-                    other.getElementsByClassName('claim')[0].innerHTML = "bomb";
+                    other.getElementsByClassName('claim')[0].innerHTML = " bomb";
                 }
                 else {
-                    other.getElementsByClassName('claim')[0].innerHTML = claim_wire + "wire(s) and the bomb";
+                    other.getElementsByClassName('claim')[0].innerHTML = claim_wire + " wire(s) and the bomb";
                 }
             }
         }
@@ -196,7 +196,7 @@ function refresh(){
             }
         }
         else {
-            setTimeout(check, 10000);
+            setTimeout(refresh, 5000);
         }
     })
 }
