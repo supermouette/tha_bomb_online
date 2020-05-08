@@ -122,8 +122,8 @@ function refresh(){
                 claim = true;
             }
             else{
-                claim_wire = res['other'][id][1];
-                claim_bomb = res['other'][id][2];
+                claim_wire = res['others'][id][1];
+                claim_bomb = res['others'][id][2];
                 if (claim_wire==0 && claim_bomb==0){
                     other.getElementsByClassName('claim')[0].innerHTML = "nothing";
                 }
