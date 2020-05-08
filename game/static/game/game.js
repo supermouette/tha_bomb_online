@@ -157,7 +157,6 @@ function refresh(){
             }
             // fill/remove placeholders as needed
             let binary_hand = res['others'][id][0];
-            binary_hand = 27;
             for (var i = 0; i < nb_slots; i++) {
                 bit = binary_hand & 1;
                 if (bit){
