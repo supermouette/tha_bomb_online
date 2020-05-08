@@ -5,9 +5,12 @@
     <h1> Index</h1>
     <p>Heyyyyy</p>
     <p> <a href="{% url 'skys' %}" > Skys of Denmark</a></p>
-    <p> (soon) Time Bomb online
+    <p> Time Bomb online (you need to be logged in)
         {% if user and not user.is_anonymous %}
-            <a href="{% url 'waiting_room' %}">(waiting room)</a>
+            <a href="{% url 'waiting_room' %}"> -> waiting room</a>
         {% endif %}
     </p>
+    {% if user and not user.is_anonymous %}
+        <p> If you want to unregister, please send a mail to loic.souverain@gmail.com</p>
+    {% endif %}
 {% endblock %}
