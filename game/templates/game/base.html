@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <h1> <a href="{% url 'index' %}">This a header.</a></h1>
+        <h1> <a href="{% url 'index' %}">legit.engineer ~ </a></h1>
         {% if user and not user.is_anonymous %}
             {% if user.is_superuser %}
                 <div class="userinfo">Welcome {{user}}. <a href="{% url 'admin:index' %}">Admin panel </a> / <a href="{% url 'logout' %}">Log out</a></div>

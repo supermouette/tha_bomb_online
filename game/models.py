@@ -28,7 +28,8 @@ class Game(models.Model):
 
     def _create_deck(self):
         if Card.objects.filter(game=self).count() != 0:
-            raise AssertionError("Game already have cards")
+            # raise AssertionError("Game already have cards")
+            Card.objects.filter(game=self).delete()
         nb_players = len(self.get_players())
         # bomb
         Card(value=Card.BOMB, game=self, player=None).save()
@@ -46,19 +47,24 @@ class Game(models.Model):
         if self.turn > 4:
             raise AssertionError("Number of turn can not exceed 4")
         count_discovered = 0
-        self.save(update_fields='count_discovered')
+        self.save(update_fields=['count_discovered'])
         cards = list(Card.objects.filter(game=self).filter(discovered=False))
         shuffle(cards)
-        players = self.get_players()
+        players = list(self.get_players())
         for i in range(len(cards)):
             cards[i].player = players[i % len(players)]
-            cards[i].save(update_fields='player')
+            cards[i].order_in_hand = i // len(players)
+            cards[i].save(update_fields=['player', 'order_in_hand'])
+
+        for p in players:
+            p.reset_claim()
+
         self.turn += 1
 
     def init_game(self):
         from random import shuffle
 
-        if self.turn != 0 or self.status != self.UNINITIALIZEDs:
+        if self.turn != 0 or self.status != self.UNINITIALIZED:
             raise AssertionError("Game already initialized")
 
         # init player team, set first player
@@ -80,7 +86,7 @@ class Game(models.Model):
         shuffle(colors)
         for i in range(nb_players):
             players[i].team = colors[i]
-            players[i].save(update_fields='team')
+            players[i].save(update_fields=['team'])
         self._create_deck()
         shuffle(players)
         self.next_player = players[0]
@@ -98,8 +104,15 @@ class Game(models.Model):
             self.status = self.RED_WIN
         else:
             return self.status
-        self.save(update_fields="status")
+        self.save(update_fields=["status"])
         return self.status
+
+    def is_ready_for_discover(self):
+        players = list(self.next_player())
+        for p in players:
+            if p.claim_bomb is None or p.claim_wire is None:
+                return False
+        return True
 
     def __str__(self):
         return self.name
@@ -114,24 +127,46 @@ class Player(models.Model):
     team = models.CharField(max_length=1, choices=TEAM_CHOICES, null=True, blank=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    claim_bomb = models.IntegerField(null=True, blank=True, default=None)
+    claim_wire = models.IntegerField(null=True, blank=True, default=None)
 
     def __str__(self):
+        if self.game is not None:
+            return self.user.username + " in " + self.game.name
         return self.user.username
 
-    def discover_card(self, card):
+    def discover_card(self, player, card_order):
+        card = Card.objects.filter(game=self.game, order_in_hand=card_order, player=player)[0]
+        if not self.game.is_ready_for_discover():
+            raise AssertionError("Not everybody has make a claim yet")
         if self.game.next_player != self:
             raise AssertionError("This is not " + str(self) + " turn.")
         if card.player == self:
             raise AssertionError("Impossible to discover own card")
         if card.discovered:
             raise AssertionError("Card already discovered")
+        if self.game.status != Game.IN_PROGRESS:
+            raise AssertionError('Game is not in progress')
 
         card.discovered = True
-        card.save(update_fields='discovered')
+        card.save(update_fields=['discovered'])
         self.game.count_discovered += 1
         self.game.next_player = card.player
+        self.game.check_victory()
         self.game.save()
         return card.value
+
+    def get_card_left_binary(self):
+        final_number = 0
+        cards = list(Card.objects.filter(game=self.game, player=self))
+        for card in cards:
+            final_number += 2**card.order_in_hand
+        return final_number
+
+    def reset_claim(self):
+        self.claim_bomb = None
+        self.claim_wire = None
+        self.save(update_fields=["claim_wire", "claim_bomb"])
 
 
 class Card(models.Model):
@@ -145,6 +180,7 @@ class Card(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, blank=True)
     discovered = models.BooleanField(default=False)
+    order_in_hand = models.IntegerField(default=None, null=True, blank=True)
 
 
 class Sky(models.Model):

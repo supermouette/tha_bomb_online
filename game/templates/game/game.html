@@ -1,0 +1,74 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} Game room {% endblock %}
+{% block content %}
+    <h1>Game room</h1>
+    <p hidden id="url_data">{% url 'game_data' game.id%}</p>
+    <p hidden id="url_bomb_img">{% static 'game/card_bomb_small.png'%}</p>
+    <p hidden id="url_wire_img">{% static 'game/card_wire_small.png'%}</p>
+    <p hidden id="url_hidden_img">{% static 'game/card_hidden_small.png'%}</p>
+    <p hidden id="url_nothing_img">{% static 'game/card_nothing_small.png'%}</p>
+
+    <!--
+    <button id="refresh_button">refresh</button>
+    -->
+    <div class="wrapper">
+
+        <div id="discovered_cards">
+            <h2>discovered cards</h2>
+            <ul>
+                <li> Nothing : <span id="nb_nothing_discovered">0</span>(out of {{nb_nothing}})</li>
+                <li> Wire : <span id="nb_wire_discovered">0</span>(out of {{players.count}})</li>
+                <li> Bomb : <span id="nb_bomb_discovered">0</span> (out of 1)</li>
+            </ul>
+            <div id="victory"></div>
+        </div>
+
+        <div id="current_player">
+            <h2>Your current cards -
+                {% if player.team == 'b' %}
+                    <span style="color:blue"> You are Blue</span>
+                {% else %}
+                    <span style="color:red"> You are Red</span>
+                {% endif %}
+            </h2>
+            <div id="current_player_claim">
+                wire :
+                <button disabled onclick="this.nextElementSibling.stepDown()" id="wire_down">-</button>
+                <input type="number" min="0" readonly id="wire_nb">
+                <button disabled onclick="this.previousElementSibling.stepUp()" id="wire_up">+</button>
+                bomb :
+                <button disabled onclick="this.nextElementSibling.stepDown()" id="bomb_down">-</button>
+                <input type="number" min="0" readonly id="bomb_nb">
+                <button disabled onclick="this.previousElementSibling.stepUp()" id="bomb_up">+</button>
+                <button disabled id="make_claim"> send claim </button>
+            </div>
+            <div id="player_hand">
+                {% for i in '01234'|make_list %}
+                    <div class="card_placeholder"></div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% for player in other_players %}
+            <div class="other_player box_{{forloop.counter}}" id="player_{{player.id}}" >
+                <h3>{{player.user.username}}</h3>
+                <p class="claim">no claim yet</p>
+                {% for i in '01234'|make_list %}
+                    <div class="card_placeholder_other_player">
+                        <img src="{% static 'game/card_hidden_small.png'%}"
+                             alt="back of a card"
+                             class="clickable_card"
+                             id="card_{{player.id}}_{{i}}">
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}
+
+
+{% block script %}
+    <script type="text/javascript" src="{% static 'game/game.js' %}"></script>
+{% endblock %}

@@ -20,8 +20,9 @@ def get_game_info(request, game_id):
 @login_required
 def join_game(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
-    player = Player(user=request.user, game=game)
-    player.save()
+    if Player.objects.filter(game=game, user=request.user).count() == 0:
+        player = Player(user=request.user, game=game)
+        player.save()
     return redirect('game_page', game_id=game_id)
 
 

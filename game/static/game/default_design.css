@@ -56,3 +56,103 @@ h1 a{
 td{
     text-align: center;
 }
+
+.card_placeholder{
+    height: 150px;
+    width: 100px;
+    padding: 5px;
+    margin: 10px;
+    border: dashed 4px #555;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.card_placeholder_other_player{
+    height: 75px;
+    width: 50px;
+    padding: 5px;
+    margin: 10px;
+    border: dashed 4px #555;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    text-align: center;
+    /*background: #BDDBD0;*/
+}
+
+.wrapper > * {
+    padding: 10px;
+    flex: 1 100%;
+    margin: 10px;
+    border-radius: 15px;
+}
+
+#discovered_cards {
+    background: #AF9AB2;
+}
+
+#current_player {
+    background: #C5EFCB;
+}
+
+.other_player {
+    background: #A4BFEB;
+}
+
+@media all and (min-width: 600px) {
+    .other_player { flex: 1 0 0; }
+}
+
+@media all and (min-width: 800px) {
+    .wrapper {flex-flow: row wrap-reverse;}
+    #discovered_cards { flex: 1 30%; }
+    #current_player { flex: 3 90%; }
+    .other_player {flex: 1 30%;}
+
+    #current_player { order: 0; }
+    #discovered_cards { order: 10; }
+    .box_1 {order: 1;}
+    .box_2 {order: 11;}
+    .box_3 {order: 12;}
+    .box_4 {order: 13;}
+    .box_5 {order: 14;}
+    .box_6 {order: 15;}
+    .box_7 {order: 16;}
+}
+
+.should_claim{
+    border: solid red 2px;
+}
+
+.should_play{
+    border: solid blue 2px;
+}
+
+input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+    width: 15px;
+
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.blue_victory{
+    color: blue;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.red_victory{
+    color: red;
+    font-weight: bold;
+    font-size: 2em;
+}

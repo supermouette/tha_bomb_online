@@ -1,0 +1,24 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} Game room {% endblock %}
+{% block content %}
+    <h1>Game room</h1>
+    <p hidden id="url_init_game">{% url 'init_game' game.id %}</p>
+    <p hidden id="url_isinit">{% url 'isinit' game.id %}</p>
+    <ul>
+        {% for player in players %}
+        <li>{{player.user.username}} {% if player == current_player %}<strong>(you)</strong>{% endif %}</li>
+        {% endfor %}
+    </ul>
+
+    <h2> Start game !</h2>
+    <p> You should be between 4 and 8 players to be able to start</p>
+    <button id="link_to_init"> Click here to start !</button>
+    <!--  TODO: check every now and then to check if the game is initialized -->
+    <h3> leave game </h3>
+    <p> <a href="{% url 'leave_game' game.id %}"> click here to leave current game(we will miss you) </a></p>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="{% static 'game/uninit_game.js' %}"></script>
+{% endblock %}
