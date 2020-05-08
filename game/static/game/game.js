@@ -189,6 +189,8 @@ function refresh(){
             victory.classList.add('red_victory');
             victory.innerHTML = "Reds wins ! ";
             for (other of other_players){
+                console.log(other.id.split[1]);
+                console.log(res['colors'][other.id.split[1]]);
                 if (res['colors'][other.id.split[1]] == 'b')
                     other.children[0].classList.add('blue_victory')
                 else
