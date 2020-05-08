@@ -26,8 +26,7 @@
 
         <div id="current_player">
             <h2>Your current cards -
-                {{player.team}}
-                {% if player.team == 'b' %}
+                {% if current_player.team == 'b' %}
                     <span style="color:blue"> You are Blue</span>
                 {% else %}
                     <span style="color:red"> You are Red</span>
