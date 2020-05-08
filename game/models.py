@@ -151,6 +151,8 @@ class Player(models.Model):
         card.discovered = True
         card.save(update_fields=['discovered'])
         self.game.count_discovered += 1
+        if self.game.count_discovered % self.game.get_players().count() == 0:
+            self.game.next_turn()
         self.game.next_player = card.player
         self.game.check_victory()
         self.game.save()
