@@ -49,7 +49,7 @@ function discover_card(event){
         url += target.id.split('_')[0];
         fetch(url).then(data=>{
             if (data.status != 200){
-                console.log("failure when discovering card")
+                console.log("failure when discovering card : "+ data.status)
                 // revert
                 target.style.visibility = "hidden";
                 current_player.classList.add('should_play');
