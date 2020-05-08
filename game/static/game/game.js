@@ -45,8 +45,8 @@ function discover_card(event){
         current_player.classList.remove('should_play');
         // make request
         url = window.location.href+'/discover/'
-        url +=  target.id.split('_')[1]+ "/";
-        url += target.id.split('_')[0];
+        url += target.id.split('_')[1]+ "/";
+        url += target.id.split('_')[2];
         console.log(url);
         fetch(url).then(data=>{
             if (data.status != 200){
