@@ -108,7 +108,7 @@ class Game(models.Model):
         return self.status
 
     def is_ready_for_discover(self):
-        players = list(self.next_player())
+        players = list(self.get_players())
         for p in players:
             if p.claim_bomb is None or p.claim_wire is None:
                 return False

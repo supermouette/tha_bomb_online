@@ -47,12 +47,11 @@ function discover_card(event){
         url = window.location.href+'/discover/'
         url += target.id.split('_')[1]+ "/";
         url += target.id.split('_')[2];
-        console.log(url);
         fetch(url).then(data=>{
             if (data.status != 200){
                 console.log("failure when discovering card : "+ data.status)
                 // revert
-                target.style.visibility = "hidden";
+                target.style.visibility = "visible";
                 current_player.classList.add('should_play');
             }
         });
