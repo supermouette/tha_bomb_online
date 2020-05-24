@@ -77,6 +77,21 @@ td{
     border-radius: 5px;
 }
 
+.card_placeholder_discovered{
+    height: 75px;
+    width: 50px;
+    padding: 5px;
+    margin: 10px;
+    /*border: dashed 4px #555;*/
+    display: inline-block;
+    border-radius: 5px;
+
+}
+
+.discovered_text{
+    font-size: 1.5em;
+}
+
 .wrapper {
     display: flex;
     flex-flow: row wrap;

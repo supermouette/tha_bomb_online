@@ -16,11 +16,34 @@
 
         <div id="discovered_cards">
             <h2>discovered cards</h2>
+            <!--
             <ul>
-                <li> Nothing : <span id="nb_nothing_discovered">0</span>(out of {{nb_nothing}})</li>
-                <li> Wire : <span id="nb_wire_discovered">0</span>(out of {{players.count}})</li>
-                <li> Bomb : <span id="nb_bomb_discovered">0</span> (out of 1)</li>
+                <li> Nothing : 0 (out of {{nb_nothing}})</li>
+                <li> Wire : 0 (out of {{players.count}})</li>
+                <li> Bomb : 0 (out of 1)</li>
             </ul>
+            -->
+            <div class="card_placeholder_discovered">
+                <img src="{% static 'game/card_nothing_extra_small.png'%}"
+                             alt="a 'nothing' card">
+                <div class="discovered_text">
+                    <span id="nb_nothing_discovered">0</span>/{{nb_nothing}}
+                </div>
+            </div>
+            <div class="card_placeholder_discovered">
+                <img src="{% static 'game/card_wire_extra_small.png'%}"
+                             alt="a 'nothing' card">
+                <div class="discovered_text">
+                    <span id="nb_wire_discovered">0</span>/{{players.count}}
+                </div>
+            </div>
+            <div class="card_placeholder_discovered">
+                <img src="{% static 'game/card_bomb_extra_small.png'%}"
+                             alt="a 'nothing' card">
+                <div class="discovered_text">
+                    <span id="nb_bomb_discovered">0</span>/1
+                </div>
+            </div>
             <div id="victory"></div>
         </div>
 
