@@ -107,7 +107,7 @@ td{
     .other_player { flex: 1 0 0; }
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 1100px) {
     .wrapper {flex-flow: row wrap-reverse;}
     #discovered_cards { flex: 1 30%; }
     #current_player { flex: 3 90%; }
