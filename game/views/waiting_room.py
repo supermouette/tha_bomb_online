@@ -29,6 +29,13 @@ def join_game(request, game_id):
 
 @login_required
 def create_game(request):
+    if Game.objects.filter(status=Game.UNINITIALIZED).count() > 100:
+        return HttpResponse('There is too many game at once', status=500)
+    elif Game.objects.exclude(id__in=Player.objects.all().values('game').distinct()).count() > 20:
+        return HttpResponse('Please, join empty room', status=500)
+    elif Game.objects.filter(id__in=Player.objects.filter(user=request.user).values('game')).\
+            filter(status=Game.UNINITIALIZED).count() > 5:
+        return HttpResponse('You are in too much room at once, please leave one', status=500)
     game = Game(name=request.POST['name'])
     game.save()
     player = Player(user=request.user, game=game)
