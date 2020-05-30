@@ -58,11 +58,11 @@
             <div id="current_player_claim">
                 wire :
                 <button disabled onclick="this.nextElementSibling.stepDown()" id="wire_down">-</button>
-                <input type="number" min="0" readonly id="wire_nb">
+                <input type="number" min="0" readonly id="wire_nb" value="0" max="5">
                 <button disabled onclick="this.previousElementSibling.stepUp()" id="wire_up">+</button>
                 bomb :
                 <button disabled onclick="this.nextElementSibling.stepDown()" id="bomb_down">-</button>
-                <input type="number" min="0" readonly id="bomb_nb">
+                <input type="number" min="0" readonly id="bomb_nb" value="0">
                 <button disabled onclick="this.previousElementSibling.stepUp()" id="bomb_up">+</button>
                 <button disabled id="make_claim"> send claim </button>
             </div>
