@@ -23,6 +23,7 @@ LOGIN_REDIRECT_URL = "/"
 SECRET_KEY = 'r5y-y6y)62!1#-saf1_u2itr-7-$go0=5en%01n42hwowta3pq'
 
 # HTTPS settings
+
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = True
@@ -30,7 +31,7 @@ CSRF_COOKIE_SECURE = True
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['legit.engineer', 'supermouette.net', 'localhost']
 
