@@ -1,0 +1,25 @@
+{% extends 'game/base.html' %}
+
+{% block title %} Skies of Denmark {% endblock %}
+{% block content %}
+    <div id="skybox">
+        <h1>Skies of denmark</h1>
+        <p>During my precious days in denmark, I was able to witness the great diversity of denmark skies during the day.</p>
+        <p> I take one high resolution photo of the sky everyday. You have here every photo of the month.</p>
+        <p> The prevision image was computer-generated with a complex neural network.</p>
+        <div>
+            <div class="day">
+                <p class="label">prevision for <br>tomorrow </p>
+                <div class="sky" style="background-color:rgb({{tomorrow.color}}, {{tomorrow.color}}, {{tomorrow.color}})"></div>
+            </div>
+            {% for day in skies %}
+                <div class="day">
+                <p class="label"> {{day.day}}/{{day.month}} </p>
+                <div class="sky" style="background-color:rgb({{day.color}}, {{day.color}}, {{day.color}})"></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %} (the website, not the weather) {% endblock %}

@@ -4,7 +4,7 @@
 {% block content %}
     <h1> Index</h1>
     <p>Heyyyyy</p>
-    <p> <a href="{% url 'skys' %}" > Skys of Denmark</a></p>
+    <p> <a href="{% url 'skies' %}" > Skies of Denmark</a></p>
     <p> Time Bomb online (you need to be logged in)
         {% if user and not user.is_anonymous %}
             <a href="{% url 'waiting_room' %}"> -> waiting room</a>

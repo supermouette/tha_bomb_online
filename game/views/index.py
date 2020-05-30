@@ -11,7 +11,7 @@ def index(request):
     return render(request, 'game/index.html', context)
 
 
-def skys_of_denmark(request):
+def skies_of_denmark(request):
     import datetime
     from game.models import Sky
     from random import randrange
@@ -46,9 +46,9 @@ def skys_of_denmark(request):
         days = Sky.objects.order_by("-day")
 
     context = {
-        'skys':days[1:],
+        'skies': days[1:],
         'tomorrow': days[0],
         'user': user,
     }
 
-    return render(request, 'game/skys_of_denmark.html', context)
+    return render(request, 'game/skies_of_denmark.html', context)
