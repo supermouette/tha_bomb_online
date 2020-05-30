@@ -59,12 +59,12 @@ function discover_card(event){
 }
 
 function refresh(){
-    console.log("refresh...");
+    //console.log("refresh...");
     fetch(url_data)
     .then(data=>{return data.json()})
     .then(res=>{
         // **** update own cards ****
-        console.log(res);
+        //console.log(res);
         // clear
         player_hand.innerHTML = "";
         //update
@@ -82,18 +82,12 @@ function refresh(){
         // **** find out who's turn it is ****
         // clear classlist
         // ... for player
-        if (current_player.classList.contains('should_claim'))
-            current_player.classList.remove('should_claim');
-        if (current_player.classList.contains('should_play'))
-            current_player.classList.remove('should_play');
+        current_player.classList.remove('should_claim');
+        current_player.classList.remove('should_play');
         // ... for others
         for (other of other_players){
-            if (other.classList.contains('should_claim')){
-                other.classList.remove('should_claim');
-            }
-            if (other.classList.contains('should_play')){
-                other.classList.remove('should_play');
-            }
+            other.classList.remove('should_claim');
+            other.classList.remove('should_play');
         }
         // is there a claim to do ?
         let claim = false;
