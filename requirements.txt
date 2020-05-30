@@ -2,3 +2,4 @@ django
 gunicorn
 django_heroku
 psycopg2
+bleach

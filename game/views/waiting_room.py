@@ -28,9 +28,8 @@ def join_game(request, game_id):
 
 @login_required
 def create_game(request):
-    print(request.POST['name'])
-    # TODO: get the right game name
-    game = Game(name=request.POST['name'])
+    import bleach
+    game = Game(name=bleach.clean(request.POST['name']))
     game.save()
     player = Player(user=request.user, game=game)
     player.save()

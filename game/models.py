@@ -158,6 +158,16 @@ class Player(models.Model):
         self.game.save()
         return card.value
 
+    def make_claim(self, claim_wire, claim_bomb):
+        if self.claim_bomb is not None and self.claim_wire is not None:
+            raise AssertionError("claim already done")
+        elif self.game.status != Game.IN_PROGRESS:
+            raise AssertionError("game is not in progress")
+        else:
+            self.claim_wire = claim_wire
+            self.claim_bomb = claim_bomb
+            self.save(update_fields=["claim_wire", "claim_bomb"])
+
     def get_card_left_binary(self):
         final_number = 0
         cards = list(Card.objects.filter(game=self.game, player=self, discovered=False))

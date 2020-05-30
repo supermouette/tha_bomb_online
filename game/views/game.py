@@ -107,12 +107,8 @@ def make_claim(request, game_id, claim_wire, claim_bomb):
     game = get_object_or_404(Game, pk=game_id)
     player = Player.objects.filter(game=game, user=request.user)[0]
 
-    if player.claim_bomb is not None and player.claim_wire is not None:
-        return HttpResponse("claim was already done", status=500)
-    elif game.status != Game.IN_PROGRESS:
-        return HttpResponse("game is not in progress", status=500)
-    else:
-        player.claim_wire = claim_wire
-        player.claim_bomb = claim_bomb
-        player.save(update_fields=["claim_wire", "claim_bomb"])
-        return HttpResponse(status=200)
+    try:
+        player.make_claim(claim_wire, claim_bomb)
+    except AssertionError as e:
+        return HttpResponse(str(e), status=500)
+    return HttpResponse(status=200)
