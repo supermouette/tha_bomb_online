@@ -3,11 +3,12 @@ from django.http import HttpResponse, JsonResponse
 from game.models import Game, Player
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.utils.html import escape
 
 
 def get_room_list(request):
     rooms = list(Game.objects.filter(status=Game.UNINITIALIZED))
-    data = [[r.name, len(r.get_players()), reverse('join_game', args=[r.id])] for r in rooms]
+    data = [[escape(r.name), len(r.get_players()), reverse('join_game', args=[r.id])] for r in rooms]
     return JsonResponse(data, safe=False)  # safe=False allow to pass non dict objects
 
 
@@ -28,8 +29,7 @@ def join_game(request, game_id):
 
 @login_required
 def create_game(request):
-    import bleach
-    game = Game(name=bleach.clean(request.POST['name'], strip=True))
+    game = Game(name=request.POST['name'])
     game.save()
     player = Player(user=request.user, game=game)
     player.save()
