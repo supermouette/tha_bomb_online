@@ -14,6 +14,7 @@ function refresh(){
         });
         console.log(content);
         tbody.innerHTML = content;
+        setTimeout(refresh, 5000);
     })
 }
 

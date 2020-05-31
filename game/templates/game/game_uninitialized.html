@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %} Game room {% endblock %}
 {% block content %}
-    <h1>Game room</h1>
+    <h1>Game room - {{ game.name|escape }}</h1>
     <p hidden id="url_init_game">{% url 'init_game' game.id %}</p>
     <p hidden id="url_isinit">{% url 'isinit' game.id %}</p>
     <ul>

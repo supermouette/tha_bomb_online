@@ -23,6 +23,7 @@ function is_init(){
         document.location.reload(true);
         }
     })
+    setTimeout(is_init, 3000);
 }
 
-setTimeout(is_init, 2000);
+is_init()

@@ -190,7 +190,7 @@ function refresh(){
             }
         }
         else {
-            setTimeout(refresh, 5000);
+            setTimeout(refresh, 3000);
         }
     })
 }

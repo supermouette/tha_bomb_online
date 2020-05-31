@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %} Game room {% endblock %}
 {% block content %}
-    <h1>Game room</h1>
+    <h1>Game room - {{ game.name|escape }}</h1>
     <p hidden id="url_data">{% url 'game_data' game.id%}</p>
     <p hidden id="url_bomb_img">{% static 'game/card_bomb_small.png'%}</p>
     <p hidden id="url_wire_img">{% static 'game/card_wire_small.png'%}</p>
