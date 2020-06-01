@@ -46,7 +46,7 @@ class Game(models.Model):
             raise AssertionError("Next turn is forbidden right now")
         if self.turn > 4:
             raise AssertionError("Number of turn can not exceed 4")
-        count_discovered = 0
+        self.count_discovered = 0
         self.save(update_fields=['count_discovered'])
         cards = list(Card.objects.filter(game=self).filter(discovered=False))
         shuffle(cards)
