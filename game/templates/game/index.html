@@ -1,19 +1,27 @@
 {% extends 'game/base.html' %}
-
+{% load static %}
 {% block title %} Index {% endblock %}
 {% block content %}
-    <h1> Index</h1>
-    <p>Heyyyyy</p>
-    <p> <a href="{% url 'skies' %}" > Skies of Denmark</a></p>
-    <p> Time Bomb online (you need to be logged in)
+    <p>Heyyyyy ! This website is under construction, but there is already a few pages available :</p>
+    <h2>Skies of Denmark</h2>
+    <p> What was the weather in Denmark this month ? What about tomorrow ? <a href="{% url 'skies' %}" >Check out </a>:) </p>
+    <h2> Time Bomb online </h2>
+    <p>An online version of the game time bomb. Protect Big Ben from the bomb ! <br>
         {% if user and not user.is_anonymous %}
-            <a href="{% url 'waiting_room' %}"> -> waiting room</a>
+            <a href="{% url 'waiting_room' %}"> enter the waiting room</a>
+        {% else %}
+            <i>You have to be logged in to access this content.</i>
         {% endif %}
     </p>
+    <h2>Emergency Playlist</h2>
     <p> Feel free to check out the
         <a href="https://www.youtube.com/playlist?list=PLdiM-7U9QMxhnPcqkIUqgCFJR71uQGHkZ"> emergency youtube playlist</a> in case of emergency.
     </p>
     {% if user and not user.is_anonymous %}
         <p> If you want to unregister, please send a mail to loic.souverain@gmail.com</p>
     {% endif %}
+    <h2> Old french minesweeper</h2>
+    <p>Because even google's one does not include every feature a good "Démineur" should have,
+    download <a href="{% static 'game/Demineur.zip' %}">this java version</a> !
+    </p>
 {% endblock %}
