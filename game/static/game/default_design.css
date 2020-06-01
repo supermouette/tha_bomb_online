@@ -141,10 +141,12 @@ td{
 
 .should_claim{
     border: solid red 2px;
+    background: #ff8547 !important;
 }
 
 .should_play{
     border: solid blue 2px;
+    background: #ffb347 !important;
 }
 
 input[type="number"] {
