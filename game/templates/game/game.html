@@ -9,20 +9,13 @@
     <p hidden id="url_hidden_img">{% static 'game/card_hidden_small.png'%}</p>
     <p hidden id="url_nothing_img">{% static 'game/card_nothing_small.png'%}</p>
 
-    <!--
-    <button id="refresh_button">refresh</button>
-    -->
     <div class="wrapper">
 
         <div id="discovered_cards">
             <h2>discovered cards</h2>
-            <!--
-            <ul>
-                <li> Nothing : 0 (out of {{nb_nothing}})</li>
-                <li> Wire : 0 (out of {{players.count}})</li>
-                <li> Bomb : 0 (out of 1)</li>
-            </ul>
-            -->
+            <p> Turn <span id="turn_nb">__</span> out of 4
+            <br> <span id="cut_left">__</span> cut left
+            </p>
             <div class="card_placeholder_discovered">
                 <img src="{% static 'game/card_nothing_extra_small.png'%}"
                              alt="a 'nothing' card">

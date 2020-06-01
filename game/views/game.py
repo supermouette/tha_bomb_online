@@ -92,6 +92,7 @@ def game_info(request, game_id):
         'next_player': game.next_player.id if game.next_player.id != player.id else -1,
         'state': game.status,
         'discovered': [nothing, wire, bomb],
+        'cut_left': len(others)+1-game.count_discovered
     }
     if game.status == Game.BLUE_WIN or game.status == Game.RED_WIN :
         colors = {}

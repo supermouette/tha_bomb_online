@@ -167,6 +167,8 @@ function refresh(){
         document.getElementById('nb_nothing_discovered').innerHTML = res['discovered'][0];
         document.getElementById('nb_wire_discovered').innerHTML = res['discovered'][1];
         document.getElementById('nb_bomb_discovered').innerHTML = res['discovered'][2];
+        document.getElementById('cut_left').innerHTML = res['cut_left'];
+        document.getElementById('turn_nb').innerHTML = res['turn'];
 
         let victory = document.getElementById('victory');
         if (res['state']== 'b'){
