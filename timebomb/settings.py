@@ -20,7 +20,7 @@ LOGIN_REDIRECT_URL = "/"
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'r5y-y6y)62!1#-saf1_u2itr-7-$go0=5en%01n42hwowta3pq'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # HTTPS settings
 
@@ -87,8 +87,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'timebomb',
         'USER': 'django',
-        'PASSWORD': 'M}3&YrJLy-=`2<V4',
-        'HOST': '40.89.129.90',
+        'PASSWORD': '**************',
+        'HOST': '192.168.1.90',
         'PORT': '5432',
     }
 }
