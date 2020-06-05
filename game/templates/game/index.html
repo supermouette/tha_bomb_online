@@ -17,11 +17,12 @@
     <p> Feel free to check out the
         <a href="https://www.youtube.com/playlist?list=PLdiM-7U9QMxhnPcqkIUqgCFJR71uQGHkZ"> emergency youtube playlist</a> in case of emergency.
     </p>
-    {% if user and not user.is_anonymous %}
-        <p> If you want to unregister, please send a mail to loic.souverain@gmail.com</p>
-    {% endif %}
     <h2> Old french minesweeper</h2>
     <p>Because even google's one does not include every feature a good "Démineur" should have,
     download <a href="{% static 'game/Demineur.zip' %}">this java version</a> !
     </p>
+
+    {% if user and not user.is_anonymous %}
+        <p> If you want to unregister, please send a mail to loic.souverain@gmail.com</p>
+    {% endif %}
 {% endblock %}
