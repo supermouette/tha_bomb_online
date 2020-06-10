@@ -22,6 +22,7 @@ class Game(models.Model):
                                     related_name='+')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=UNINITIALIZED)
     name = models.CharField(max_length=30)
+    next_game = models.ForeignKey('Game', on_delete=models.SET_NULL, default=None, blank=True, null=True)
 
     def get_players(self):
         return Player.objects.filter(game=self)
@@ -100,12 +101,32 @@ class Game(models.Model):
         wires = discovered.filter(value=Card.WIRE)
         if wires.count() == self.get_players().count():
             self.status = self.BLUE_WIN
+            self.create_next_game()
         elif bomb.count() != 0 or discovered.count() == self.get_players().count()*5:
             self.status = self.RED_WIN
+            self.create_next_game()
         else:
             return self.status
         self.save(update_fields=["status"])
         return self.status
+
+    def create_next_game(self):
+        # create a reference to a new game, to allow a replay button
+        if self.next_game is None:
+            new_name = self.name
+            last_part = self.name.split(' ')[-1]
+            if last_part.isdecimal():
+                last_part = str(int(last_part)+1)
+            else:
+                last_part += " 2"
+            if self.name.split(' ')[:-1] == []:
+                new_name = last_part
+            else:
+                new_name = ' '.join(self.name.split(' ')[:-1]) + " " + last_part
+            if len(new_name) >= 30:
+                new_name = new_name[2:]  # because why not ?
+            self.next_game = Game(name=new_name)
+            self.next_game.save()
 
     def is_ready_for_discover(self):
         players = list(self.get_players())
@@ -140,25 +161,26 @@ class Player(models.Model):
             # It should be enough to select_for_update the card
             # If there is more bug, it might be useful to select_for_update the game and/or self
             card = Card.objects.select_for_update().filter(game=self.game, order_in_hand=card_order, player=player)[0]
-            if not self.game.is_ready_for_discover():
+            game = Game.objects.select_for_update().filter(id=self.game.id)[0]
+            if not game.is_ready_for_discover():
                 raise AssertionError("Not everybody has make a claim yet")
-            if self.game.next_player != self:
-                raise AssertionError("This is not " + str(self) + " turn.")
+            if game.next_player != self:
+                raise AssertionError("This is not " + str(self) + " turn. It is "+str(game.next_player))
             if card.player == self:
                 raise AssertionError("Impossible to discover own card")
             if card.discovered:
                 raise AssertionError("Card already discovered")
-            if self.game.status != Game.IN_PROGRESS:
+            if game.status != Game.IN_PROGRESS:
                 raise AssertionError('Game is not in progress')
 
             card.discovered = True
             card.save(update_fields=['discovered'])
-            self.game.count_discovered += 1
-            if self.game.count_discovered % self.game.get_players().count() == 0:
-                self.game.next_turn()
-            self.game.next_player = card.player
-            self.game.check_victory()
-            self.game.save()
+            game.count_discovered += 1
+            if game.count_discovered % game.get_players().count() == 0:
+                game.next_turn()
+            game.next_player = player
+            game.save(update_fields=["next_player", "count_discovered"])
+            game.check_victory()
             return card.value
 
     def make_claim(self, claim_wire, claim_bomb):
