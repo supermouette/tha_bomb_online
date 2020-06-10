@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.db import transaction
 
 class Game(models.Model):
 
@@ -136,27 +136,30 @@ class Player(models.Model):
         return self.user.username
 
     def discover_card(self, player, card_order):
-        card = Card.objects.filter(game=self.game, order_in_hand=card_order, player=player)[0]
-        if not self.game.is_ready_for_discover():
-            raise AssertionError("Not everybody has make a claim yet")
-        if self.game.next_player != self:
-            raise AssertionError("This is not " + str(self) + " turn.")
-        if card.player == self:
-            raise AssertionError("Impossible to discover own card")
-        if card.discovered:
-            raise AssertionError("Card already discovered")
-        if self.game.status != Game.IN_PROGRESS:
-            raise AssertionError('Game is not in progress')
+        with transaction.atomic():
+            # It should be enough to select_for_update the card
+            # If there is more bug, it might be useful to select_for_update the game and/or self
+            card = Card.objects.select_for_update().filter(game=self.game, order_in_hand=card_order, player=player)[0]
+            if not self.game.is_ready_for_discover():
+                raise AssertionError("Not everybody has make a claim yet")
+            if self.game.next_player != self:
+                raise AssertionError("This is not " + str(self) + " turn.")
+            if card.player == self:
+                raise AssertionError("Impossible to discover own card")
+            if card.discovered:
+                raise AssertionError("Card already discovered")
+            if self.game.status != Game.IN_PROGRESS:
+                raise AssertionError('Game is not in progress')
 
-        card.discovered = True
-        card.save(update_fields=['discovered'])
-        self.game.count_discovered += 1
-        if self.game.count_discovered % self.game.get_players().count() == 0:
-            self.game.next_turn()
-        self.game.next_player = card.player
-        self.game.check_victory()
-        self.game.save()
-        return card.value
+            card.discovered = True
+            card.save(update_fields=['discovered'])
+            self.game.count_discovered += 1
+            if self.game.count_discovered % self.game.get_players().count() == 0:
+                self.game.next_turn()
+            self.game.next_player = card.player
+            self.game.check_victory()
+            self.game.save()
+            return card.value
 
     def make_claim(self, claim_wire, claim_bomb):
         if self.claim_bomb is not None and self.claim_wire is not None:
