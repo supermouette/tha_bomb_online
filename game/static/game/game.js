@@ -169,11 +169,24 @@ function refresh(){
         document.getElementById('nb_bomb_discovered').innerHTML = res['discovered'][2];
         document.getElementById('cut_left').innerHTML = res['cut_left'];
         document.getElementById('turn_nb').innerHTML = res['turn'];
-
+        if (res['last_player'] != null)
+            document.getElementById('last_player').innerHTML = res['last_player'];
+        else
+            document.getElementById('last_player').innerHTML = '__';
+        if (res['last_card_value'] != null)
+            document.getElementById('last_card_value').innerHTML = res['last_card_value'];
+        else
+            document.getElementById('last_card_value').innerHTML = '__';
+        if (res['last_card_owner'] != null)
+            document.getElementById('last_card_owner').innerHTML = res['last_card_owner'];
+        else
+            document.getElementById('last_card_owner').innerHTML = '__';
+        document.getElementById('last_player')
         let victory = document.getElementById('victory');
         if (res['state']== 'b'){
             victory.classList.add('blue_victory');
             victory.innerHTML = "Blues wins ! ";
+            victory.innerHTML += "<a href='"+res['replay_link']+"'> Replay </a>";
             for (other of other_players){
                 if (res['colors'][other.id.split[1]] == 'b')
                     other.children[0].classList.add('blue_victory')
@@ -184,6 +197,7 @@ function refresh(){
         else if (res['state']== 'r'){
             victory.classList.add('red_victory');
             victory.innerHTML = "Reds wins ! ";
+            victory.innerHTML += "<a href='"+res['replay_link']+"'> Replay </a>";
             for (other of other_players){
                 if (res['colors'][other.id.split('_')[1]] == 'b')
                     other.children[0].classList.add('blue_victory')

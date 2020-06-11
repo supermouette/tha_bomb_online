@@ -84,8 +84,29 @@ td{
     margin: 10px;
     /*border: dashed 4px #555;*/
     display: inline-block;
-    border-radius: 5px;
+}
 
+.placeholder_last_cut{
+    height: 80px;
+    width: 100px;
+    padding: 5px;
+    margin: 10px;
+    display: inline-block;
+    border-left: solid black 2px;
+    vertical-align: top;
+
+}
+
+#last_player{
+    font-weight: bold;
+}
+
+#last_card_value{
+    font-weight: bold;
+}
+
+#last_card_owner{
+    font-weight: bold;
 }
 
 .discovered_text{

@@ -23,6 +23,8 @@ class Game(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=UNINITIALIZED)
     name = models.CharField(max_length=30)
     next_game = models.ForeignKey('Game', on_delete=models.SET_NULL, default=None, blank=True, null=True)
+    last_card_cut = models.ForeignKey('Card', on_delete=models.SET_NULL, default=None, blank=True, null=True, related_name="+")
+    last_player = models.ForeignKey('Player', on_delete=models.SET_NULL, default=None, blank=True, null=True, related_name="+")
 
     def get_players(self):
         return Player.objects.filter(game=self)
@@ -61,6 +63,9 @@ class Game(models.Model):
             p.reset_claim()
 
         self.turn += 1
+        # self.last_card_cut = None
+        # self.last_player = None
+        self.save(update_fields=['turn']) # , 'last_card_cut', 'last_player'])
 
     def init_game(self):
         from random import shuffle
@@ -127,6 +132,7 @@ class Game(models.Model):
                 new_name = new_name[2:]  # because why not ?
             self.next_game = Game(name=new_name)
             self.next_game.save()
+            self.save()
 
     def is_ready_for_discover(self):
         players = list(self.get_players())
@@ -160,7 +166,7 @@ class Player(models.Model):
         with transaction.atomic():
             # It should be enough to select_for_update the card
             # If there is more bug, it might be useful to select_for_update the game and/or self
-            card = Card.objects.select_for_update().filter(game=self.game, order_in_hand=card_order, player=player)[0]
+            card = Card.objects.select_for_update().filter(game=self.game, order_in_hand=card_order, player=player, discovered=False)[0]
             game = Game.objects.select_for_update().filter(id=self.game.id)[0]
             if not game.is_ready_for_discover():
                 raise AssertionError("Not everybody has make a claim yet")
@@ -179,7 +185,9 @@ class Player(models.Model):
             if game.count_discovered % game.get_players().count() == 0:
                 game.next_turn()
             game.next_player = player
-            game.save(update_fields=["next_player", "count_discovered"])
+            game.last_player = self
+            game.last_card_cut = card
+            game.save(update_fields=["next_player", "count_discovered", "last_player", "last_card_cut"])
             game.check_victory()
             return card.value
 

@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from game.models import Game, Player, Card
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 
 @login_required
@@ -44,6 +45,7 @@ def discover_card(request, game_id, player_id, card_in_hand):
         current_player.discover_card(player_picked, card_in_hand)
         return HttpResponse(status=200)
     except AssertionError as e:
+        print(str(e))
         return HttpResponse(str(e), status=500)
 
 
@@ -92,13 +94,18 @@ def game_info(request, game_id):
         'next_player': game.next_player.id if game.next_player.id != player.id else -1,
         'state': game.status,
         'discovered': [nothing, wire, bomb],
-        'cut_left': len(others)+1-game.count_discovered
+        'cut_left': len(others)+1-game.count_discovered,
+        'last_card_value': game.last_card_cut.get_value_display() if game.last_card_cut is not None else None,
+        'last_card_owner': game.last_card_cut.player.user.username if game.last_card_cut is not None else None,
+        'last_player': game.last_player.user.username if game.last_player is not None else None
     }
-    if game.status == Game.BLUE_WIN or game.status == Game.RED_WIN :
+    if game.status == Game.BLUE_WIN or game.status == Game.RED_WIN:
+        print(game.status)
         colors = {}
         for other in others:
             colors[other.id] = other.team
         info['colors'] = colors
+        info['replay_link'] = reverse("join_game", kwargs={'game_id': game.next_game.id})
     print(info)
     return JsonResponse(info, safe=False)
 
