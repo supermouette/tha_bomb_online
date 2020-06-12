@@ -1,5 +1,5 @@
 from django.urls import path
-
+from django.views.generic.base import TemplateView
 from . import views
 
 urlpatterns = [
@@ -21,4 +21,10 @@ urlpatterns = [
     path('game/<int:game_id>/discover/<int:player_id>/<int:card_in_hand>', views.discover_card, name="discover_card"),
     path('game/<int:game_id>/claim/<int:claim_wire>/<int:claim_bomb>', views.make_claim, name="claim"),
     path('game/create', views.create_game, name="create_game"),
+
+
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="game/robots.txt", content_type="text/plain"),
+    ),
 ]

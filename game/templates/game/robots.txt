@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: /verysecure/
+Disallow: /admin/
+Disallow: /blue_ratio
+Disallow: /game/
