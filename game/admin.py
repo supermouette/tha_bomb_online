@@ -3,12 +3,17 @@ from django.contrib import admin
 from .models import Game, Player, Card, Sky
 
 
-def clear_card_from_finished_games():
-    Card.objects.filter(game__status__in=[Game.BLUE_WIN, Game.RED_WIN]).delete()
+def delete_card_if_not_used(modeladmin, request, queryset):
+    queryset.objects.filter(game__status__in=[Game.BLUE_WIN, Game.RED_WIN]).delete()
+
+
+class CardAdmin(admin.ModelAdmin):
+    # list_display = ['title', 'status']
+    # ordering = ['title']
+    actions = [delete_card_if_not_used]
 
 
 admin.site.register(Game)
 admin.site.register(Player)
-admin.site.register(Card)
+admin.site.register(Card, CardAdmin)
 admin.site.register(Sky)
-admin.site.add_action(clear_card_from_finished_games)
