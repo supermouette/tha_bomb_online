@@ -14,8 +14,7 @@ def index(request):
 def blue_ratio(request):
     from game.models import Game
     red = Game.objects.filter(status=Game.RED_WIN).count()
-    blue = Game.objects.filter(status=Game.RED_WIN).count()
-
+    blue = Game.objects.filter(status=Game.BLUE_WIN).count()
     if red+blue == 0:
         red = blue = 1
     return HttpResponse("{:.2f}".format(blue/(red+blue)))
