@@ -1,6 +1,8 @@
 from django.urls import path
 from django.views.generic.base import TemplateView
 from . import views
+from django.conf.urls import url
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -22,9 +24,6 @@ urlpatterns = [
     path('game/<int:game_id>/claim/<int:claim_wire>/<int:claim_bomb>', views.make_claim, name="claim"),
     path('game/create', views.create_game, name="create_game"),
 
-
-    path(
-        "robots.txt",
-        TemplateView.as_view(template_name="game/robots.txt", content_type="text/plain"),
-    ),
+    url(r'^robots\.txt$', RedirectView.as_view(url='/static/game/robots.txt')),
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/images/favicon.ico')),
 ]
