@@ -123,6 +123,7 @@ def make_claim(request, game_id, claim_wire, claim_bomb):
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def delete_unused_cards(request):
+def delete_unused(request):
     Card.delete_unused()
+    Player.delete_unused()
     return redirect('index')

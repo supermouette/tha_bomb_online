@@ -214,6 +214,9 @@ class Player(models.Model):
         self.claim_wire = None
         self.save(update_fields=["claim_wire", "claim_bomb"])
 
+    @classmethod
+    def delete_unused(cls):
+        Player.objects.filter(game__status__in=[Game.RED_WIN, Game.BLUE_WIN]).delete()
 
 class Card(models.Model):
 
