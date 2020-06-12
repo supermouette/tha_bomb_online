@@ -25,5 +25,5 @@ urlpatterns = [
     path('game/create', views.create_game, name="create_game"),
 
     url(r'^robots\.txt$', RedirectView.as_view(url='/static/game/robots.txt')),
-    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/images/favicon.ico')),
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/game/favicon.ico')),
 ]
