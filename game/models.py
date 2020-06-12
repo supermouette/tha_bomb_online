@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db import transaction
 
+
 class Game(models.Model):
 
     UNINITIALIZED = "u"
@@ -226,6 +227,10 @@ class Card(models.Model):
     player = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, blank=True)
     discovered = models.BooleanField(default=False)
     order_in_hand = models.IntegerField(default=None, null=True, blank=True)
+
+    @classmethod
+    def delete_unused(cls):
+        Card.objects.filter(game__status__in=[Game.RED_WIN, Game.BLUE_WIN]).delete()
 
 
 class Sky(models.Model):

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from game.models import Game, Player, Card
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.urls import reverse
 
 
@@ -120,3 +120,9 @@ def make_claim(request, game_id, claim_wire, claim_bomb):
     except AssertionError as e:
         return HttpResponse(str(e), status=500)
     return HttpResponse(status=200)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def delete_unused_cards(request):
+    Card.delete_unused()
+    return redirect('index')

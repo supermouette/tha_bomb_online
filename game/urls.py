@@ -23,6 +23,7 @@ urlpatterns = [
     path('game/<int:game_id>/discover/<int:player_id>/<int:card_in_hand>', views.discover_card, name="discover_card"),
     path('game/<int:game_id>/claim/<int:claim_wire>/<int:claim_bomb>', views.make_claim, name="claim"),
     path('game/create', views.create_game, name="create_game"),
+    path('game/delete_unused_cards', views.delete_unused_cards, name='delete_unused_cards'),
 
     url(r'^robots\.txt$', RedirectView.as_view(url='/static/game/robots.txt')),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/game/favicon.ico')),
