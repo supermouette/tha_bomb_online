@@ -194,3 +194,27 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: bold;
     font-size: 2em;
 }
+
+#win_bar{
+    margin: auto;
+    margin-top: 5px;
+    height: 5px;
+    display: flex;
+    width: 50%;
+    align: center;
+}
+
+#blue_bar{
+    background-color: blue;
+    width: 50%;
+    height: 5px;
+    display: inline-block;
+
+}
+
+#red_bar{
+    background-color: red;
+    flex-grow: 1;
+    height: 5px;
+    display: inline-block;
+}

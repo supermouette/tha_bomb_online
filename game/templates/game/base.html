@@ -19,9 +19,14 @@
         <div class="userinfo">You are not log in. <a href="{% url 'login' %}">Log in</a> or <a href="{% url 'signup' %}">register</a> </div>
         {% endif %}
     </header>
+    <div id="win_bar">
+        <div id="blue_bar"></div>
+        <div id="red_bar"></div>
+    </div>
     {% block content %}
     {% endblock %}
     <footer> don't worry, it should get better soon... {% block footer %} {% endblock %}</footer>
+    <script type="text/javascript" src="{% static 'game/win_bar.js' %}"></script>
     {% block script %}
     {% endblock %}
 </body>

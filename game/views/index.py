@@ -11,6 +11,16 @@ def index(request):
     return render(request, 'game/index.html', context)
 
 
+def blue_ratio(request):
+    from game.models import Game
+    red = Game.objects.filter(status=Game.RED_WIN).count()
+    blue = Game.objects.filter(status=Game.RED_WIN).count()
+
+    if red+blue == 0:
+        red = blue = 1
+    return HttpResponse("{:.2f}".format(blue/(red+blue)))
+
+
 def skies_of_denmark(request):
     import datetime
     from game.models import Sky
