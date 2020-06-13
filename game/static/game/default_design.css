@@ -142,7 +142,7 @@ td{
 @media all and (min-width: 600px) {
     .other_player { flex: 1 0 0; }
     .front_wrapper > h2{
-        font-size: larger;
+        font-size: 3rem;
         white-space: normal;
     }
 }
