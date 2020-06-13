@@ -269,3 +269,31 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 10px;
 }
 
+.auth_form{
+    margin: auto;
+    text-align: center;
+    width: 90%;
+}
+
+.auth_form > label{
+    font-size: 22px;
+}
+
+.auth_form > small{
+    font-size: 18px;
+}
+
+small > ul{
+    margin: 0px;
+}
+
+.auth_form > input[type=text], .auth_form > input[type=password]{
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.auth_form > button, .auth_form > input[type=submit]{
+    font-size: 20px;
+    color: white;
+    background: #0aa;
+}

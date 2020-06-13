@@ -1,20 +1,19 @@
 {% extends 'game/base.html' %}
-
+{% block title %} Register {% endblock %}
 {% block content %}
   <h1>Overly fancy sign up form</h1>
-  <form method="post">
+  <form method="post" class="auth_form">
     {% csrf_token %}
     {% for field in form %}
-      <p>
         {{ field.label_tag }}<br>
-        {{ field }}
+        {{ field }}<br><br>
         {% if field.help_text %}
           <small style="color: grey">{{ field.help_text }}</small>
         {% endif %}
         {% for error in field.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
-      </p>
+      <br><br>
     {% endfor %}
     <button type="submit">Sign up</button>
   </form>
