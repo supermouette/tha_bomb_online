@@ -218,3 +218,50 @@ input[type=number]::-webkit-outer-spin-button {
     height: 5px;
     display: inline-block;
 }
+
+.front_wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    text-align: center;
+    /*background: #BDDBD0;*/
+}
+
+.front_wrapper > * {
+    flex: 1 30%;
+    margin: 10px;
+    border-radius: 15px;
+    background: #f0f4f5;
+}
+
+.front_wrapper > * > h2{
+    background: #ff6e14;
+    color: white;
+    margin: 0px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    white-space: nowrap;
+}
+
+.front_wrapper > * > p{
+    padding: 10px;
+}
+
+.time_bomb{
+
+}
+
+.time_bomb > h2{
+    background-color: #0AA;
+}
+
+.img_time_bomb{
+    margin: auto;
+    margin-top: 30px;
+    padding: 10px;
+    width: 315px;
+}
+
+.spinner > iframe{
+    margin: 10px;
+}
+
