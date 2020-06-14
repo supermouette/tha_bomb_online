@@ -4,6 +4,9 @@
 {% block content %}
     <h1>Waiting room</h1>
 
+    <p> If you never played, you can <a href="{% url 'game_rules' %}"> see the rules !</a>
+     (available in both English and French)</p>
+
     <p hidden id="url_room_list">{% url 'room_list' %}</p>
     <h2> Join existing game</h2>
     <button hidden id="refresh_button"> refresh </button>

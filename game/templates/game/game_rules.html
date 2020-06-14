@@ -1,0 +1,107 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} Game rules {% endblock %}
+{% block content %}
+    <div class="language_chooser">
+        <img src="{% static 'game/flag-for-united-kingdom.png' %}" alt="flag of U.K." id="chose_en">
+        <img src="{% static 'game/flag-for-france.png' %}" alt="flag of France" id="chose_fr">
+    </div>
+
+    <div id="english_rules">
+        <h2> Game rules</h2>
+        <div class="tips">Call your friend while playing time bomb!</div>
+        <p>
+            Timebomb is a game based on bluff, that require from 4 to 8 players. There is two teams:
+            <span class="blue_desc">Blues</span> must diffuse the <strong>bomb</strong>,
+            by finding all the colored <strong>wires</strong> (they are referred as just ‘wires’ in the game).
+            <span class="red_desc">Reds</span> must either explode the <strong>bomb</strong> or prevent <span class="blue_desc">blues</span>
+            from finding all the <strong>wires</strong>.
+        </p>
+        <p>
+            Discovered card, or cut card, are in the “discovered cards” area. A card in your hand is not discovered.
+        </p>
+        <p>
+            a game is composed of 4 rounds, each composed of two phases.
+        </p>
+        <h3>First phase – claim</h3>
+        <p>
+            During this phase, players, in the order of their choices, must tell other what is in their hand.
+            It’s where the bluff is: Feel free to lie to achieve your goal!
+        </p>
+        <div class="tips">
+            If you are <span class="blue_desc">blue</span>, you want to tell other the number of <strong>wires</strong>
+            you really have : if you have several <strong>wires</strong> in your hand,
+            you have to tell people that it is worth choosing you. On the contrary, if you have no <strong>wires</strong>, you do not want player to chose you,
+            as it wastes an opportunity to pick a <strong>wire</strong>. However, if you have the <strong>bomb</strong>,
+            you might want to say that you have nothing, even if you have <strong>wires</strong>… It is way to risky to pick you!<br><br>
+            If you are <span class="red_desc">red</span> and have the <strong>bomb</strong>, maybe you want to say you have <strong>wires</strong> instead, to make people chose you.
+            However, if you have a lot of <strong>wires</strong>, maybe you want to say that you do not have that many.
+            In any case, be subtle! You may not want <span class="blue_desc">blues</span> to think you are <span class="red_desc">red</span> right away… unless that is your plan?
+        </div>
+        <h3>Second phase : cut cards!</h3>
+        <p>
+            This is where the true fun is! The player who have their area in orange must play. Try to influence him/her.
+        </p>
+        <p>
+            Be careful, and <strong>never reveal the order of your cards, it is a secret!</strong>
+        </p>
+        <p>
+            When it is your turn, click on a card with a question mark on it to discover (cut) it.
+            The next player will be the one you chose a card from.
+        </p>
+        <p>
+            When there is as many discovered cards as player, the phase stop, the remaining cards are shuffle,
+            and you are back to phase 1, with one less card as before.
+            The last round is when you start with only two cards.
+        </p>
+    </div>
+
+    <div id="french_rules" hidden>
+        <h2> Règles du jeu</h2>
+        <div class="tips">Le jeu est plus convivial en visioconférence</div>
+        <p>Timebomb est un jeu de bluff, qui se joue de 4 à 8 joueurs.
+            Il y a 2 équipes, les <span class="blue_desc">bleus</span>,
+            qui doivent désamorcer la <strong>bombe</strong> en trouvant tous les <strong>câbles</strong> colorés
+            (‘wire’ dans le jeu), et les <span class="red_desc">rouges</span>, qui doivent soit faire exploser la <strong>bombe</strong>,
+            soit empêcher les <span class="blue_desc">bleus</span> de trouver les <strong>câbles</strong> colorés.
+        </p>
+        <p>Les cartes découvertes se situe dans la zone « discovered cards ».
+            Une carte de votre jeu n’est pas découverte.
+        </p>
+        <p>Le jeu se déroule en 4 manches, chacune comportant 2 phases.</p>
+        <h3>Première phase, annonce (‘claim’)</h3>
+        <p> Lors de cette phase, Les joueurs doivent, dans l’ordre qu’ils désirent, annoncer leur main.
+            C’est dans cette étape que le bluff à lieu, puisqu’il est possible de mentir.
+            Faites attention à votre annonce, elle est cruciale !
+        </p>
+        <div class="tips">Si vous êtes <span class="blue_desc">bleu</span>, vous souhaitez indiquer aux autres joueurs où se situe les <strong>câbles</strong>.
+            Si vous en avez, dites-le, sinon, dites que vous n’avez rien,
+            vous ne voulez pas gâcher un tour en ayant quelqu’un piochant chez vous…
+            D’ailleurs, si vous avez la <strong>bombe</strong>, peut est-il judicieux de la cacher…<br><br>
+            Si vous êtes <span class="red_desc">rouge</span>, et que vous avez la <strong>bombe</strong>, annoncez plutôt que vous avez des <strong>câbles</strong>,
+            pour inciter les <span class="blue_desc">bleus</span> à venir piocher chez vous. Au contraire, si vous avez des <strong>câbles</strong>,
+            dissimulez-les il ne faudrait pas que quelqu’un les trouve. Sachez toutes fois rester discret,
+            il y a très peu de chance d’avoir 4 <strong>câbles</strong> en début de partie !
+        </div>
+        <!-- <img alt="screenshot of phase 1" src="{% static 'game/screen.png' %}"> -->
+        <h3>Deuxième phase, coupez les cartes !</h3>
+        <p>Une fois que tout le monde a annoncé son jeu, les choses sérieuses commence.
+            C’est à la personne qui a une zone de jeu orange de jouer.
+            Essayez d’influencer son tour de jeu !
+        </p>
+        <p>Attention toutes fois, <strong>ne révélez pas l’ordre de votre jeu, il doit rester secret !</strong></p>
+        <p>Si c’est à vous, cliquez sur une des cartes avec un point d’interrogation pour la découvrir.
+            Une fois la carte découverte, vous donner le tour à la personne qui détenait cette carte.
+        </p>
+        <p>
+            Lorsqu’autant de cartes que de joueurs ont été découverte, la phase s’arrête, le jeu est mélangé,
+            et vous recommencez une manche, à la première phase, et avec une carte en moins.
+            Au dernier tour de jeu, chaque joueur n’a plus que deux cartes.
+        </p>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'game/game_rules.js' %}"></script>
+{% endblock %}

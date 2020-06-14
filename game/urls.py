@@ -24,6 +24,7 @@ urlpatterns = [
     path('game/<int:game_id>/claim/<int:claim_wire>/<int:claim_bomb>', views.make_claim, name="claim"),
     path('game/create', views.create_game, name="create_game"),
     path('game/delete_unused', views.delete_unused, name='delete_unused'),
+    path('game/rules', views.game_rules, name='game_rules'),
 
     url(r'^robots\.txt$', RedirectView.as_view(url='/static/game/robots.txt')),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/game/favicon.ico')),

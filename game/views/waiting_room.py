@@ -51,3 +51,13 @@ def waiting_room(request):
 
     context = {"user": user}
     return render(request, 'game/waiting_room.html', context)
+
+
+def game_rules(request):
+    if request.user.is_authenticated:
+        user = request.user
+    else:
+        user = False
+
+    context = {"user": user}
+    return render(request, 'game/game_rules.html', context)
