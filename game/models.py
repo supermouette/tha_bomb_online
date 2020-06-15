@@ -24,13 +24,15 @@ class Game(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=UNINITIALIZED)
     name = models.CharField(max_length=30)
     next_game = models.ForeignKey('Game', on_delete=models.SET_NULL, default=None, blank=True, null=True)
-    last_card_cut = models.ForeignKey('Card', on_delete=models.SET_NULL, default=None, blank=True, null=True, related_name="+")
-    last_player = models.ForeignKey('Player', on_delete=models.SET_NULL, default=None, blank=True, null=True, related_name="+")
+    last_card_cut = models.ForeignKey('Card', on_delete=models.SET_NULL, default=None,
+                                      blank=True, null=True, related_name="+")
+    last_player = models.ForeignKey('Player', on_delete=models.SET_NULL, default=None,
+                                    blank=True, null=True, related_name="+")
 
     def get_players(self):
         return Player.objects.filter(game=self)
 
-    def _create_deck(self):
+    def create_deck(self):
         if Card.objects.filter(game=self).count() != 0:
             # raise AssertionError("Game already have cards")
             Card.objects.filter(game=self).delete()
@@ -71,14 +73,13 @@ class Game(models.Model):
     def init_game(self):
         from random import shuffle
         with transaction.atomic():  # should hopefully resolve bugs
-            game = Game.objects.select_for_update().filter(game=self)[0]
+            game = Game.objects.select_for_update().filter(id=self.id)[0]
             if game.turn != 0 or game.status != game.UNINITIALIZED:
                 raise AssertionError("Game already initialized")
 
             # init player team, set first player
             players = list(game.get_players())
             nb_players = len(players)
-
             if nb_players in [4, 5]:
                 nb_blue = 3
                 nb_red = 2
@@ -94,13 +95,15 @@ class Game(models.Model):
             shuffle(colors)
             for i in range(nb_players):
                 players[i].team = colors[i]
-                players[i].save(update_fields=['team'])
-            game._create_deck()
+                players[i].save()
+            game.create_deck()
             shuffle(players)
             game.next_player = players[0]
             game.status = game.IN_PROGRESS
-            game.next_turn()
             game.save()
+            game.next_turn()
+
+        return game
 
     def check_victory(self):
         discovered = Card.objects.filter(game=self).filter(discovered=True)

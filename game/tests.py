@@ -22,11 +22,24 @@ class TestBugClement(TestCase):
     def test_bug_clement(self):
         self.game, self.players = _create_game(nb_player=4)
         self.clement = self.players[0]
-        self.game.init_game()
+        self.game = self.game.init_game()
+        self.assertEqual(self.game.status, Game.IN_PROGRESS)
+        count_blue = 0
+        count_red = 0
+        for player in self.game.get_players():
+            if player.team == Player.BLUE:
+                count_blue += 1
+            elif player.team == Player.RED:
+                count_red += 1
+            else:
+                print('hmmm', player.user.username, player.team)
+        self.assertIn(count_blue, [2, 3])
+        self.assertIn(count_red, [1, 2])
         other_player = self.players[1]
         print(other_player)
         card_left = 20
         for player in self.players:
+            player.refresh_from_db()
             player.make_claim(0, 0)
         if self.game.next_player != self.clement:
             print(str(self.game.next_player) + " have to cut Clément")
