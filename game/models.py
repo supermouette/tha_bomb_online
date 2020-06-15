@@ -184,13 +184,13 @@ class Player(models.Model):
             card.discovered = True
             card.save(update_fields=['discovered'])
             game.count_discovered += 1
-            if game.count_discovered % game.get_players().count() == 0:
-                game.next_turn()
             game.next_player = player
             game.last_player = self
             game.last_card_cut = card
             game.save(update_fields=["next_player", "count_discovered", "last_player", "last_card_cut"])
             game.check_victory()
+            if game.count_discovered % game.get_players().count() == 0 and game.status == Game.IN_PROGRESS:
+                game.next_turn()
             return card.value
 
     def make_claim(self, claim_wire, claim_bomb):
