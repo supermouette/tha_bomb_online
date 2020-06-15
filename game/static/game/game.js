@@ -13,7 +13,7 @@ alt_img = {"n":"nothing", "w": 'wire', "b": 'bomb'}
 
 function should_play(){
     current_player.classList.add('should_play');
-    for (card of document.getElementsByClassName('clickable_card')){
+    for (const card of document.getElementsByClassName('clickable_card')){
         if (card.style.visibility == "hidden"){
             card.style.cursor = 'default';
         }
@@ -25,7 +25,7 @@ function should_play(){
 
 function should_not_play(){
     current_player.classList.remove('should_play');
-    for (card of document.getElementsByClassName('clickable_card')){
+    for (const card of document.getElementsByClassName('clickable_card')){
         if (card.style.visibility == "hidden"){
             card.style.cursor = 'default';
         }
@@ -216,7 +216,7 @@ function refresh(){
             victory.innerHTML = "Blues wins ! ";
             victory.innerHTML += "<a href='"+res['replay_link']+"'> Replay </a>";
             for (other of other_players){
-                if (res['colors'][other.id.split[1]] == 'b')
+                if (res['colors'][other.id.split('_')[1]] == 'b')
                     other.children[0].classList.add('blue_victory')
                 else
                     other.children[0].classList.add('red_victory');
