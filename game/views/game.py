@@ -17,7 +17,7 @@ def game_page(request, game_id):
     if game.status == Game.UNINITIALIZED:
         return render(request, 'game/game_uninitialized.html', context)
     else:
-        context['nb_nothing'] = context['players'].count()*4
+        context['nb_nothing'] = context['players'].count()*4-1
         return render(request, 'game/game.html', context)
 
 
