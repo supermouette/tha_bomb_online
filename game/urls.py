@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('blue_ratio', views.blue_ratio, name='blue_ratio'),
     path('skies_of_denmark', views.skies_of_denmark, name='skies'),
+    path('faq', views.faq, name='faq'),
     path('verysecure/register', views.signup, name='signup'),
     path('game', views.waiting_room, name="waiting_room"),
     path('game/<int:game_id>', views.game_page, name="game_page"),

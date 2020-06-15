@@ -11,6 +11,15 @@ def index(request):
     return render(request, 'game/index.html', context)
 
 
+def faq(request):
+    if request.user.is_authenticated:
+        user = request.user
+    else:
+        user = False
+    context = {"user": user}
+    return render(request, 'game/faq.html', context)
+
+
 def blue_ratio(request):
     from game.models import Game
     red = Game.objects.filter(status=Game.RED_WIN).count()

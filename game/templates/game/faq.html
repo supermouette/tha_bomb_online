@@ -1,0 +1,34 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} Waiting room {% endblock %}
+{% block content %}
+    <h2>Frequently Ask Questions</h2>
+
+    <h3>Why is this page ugly ?</h3>
+    <p> It is absolutely not finished :'(</p>
+    <h3>What is this website ?</h3>
+    <p>
+        My main goal was to host my online version of time bomb,
+        but it became a place where I can show various stuff I made. Hopefully more stuff will come :)
+    </p>
+    <h3>Who am I ?</h3>
+    <p>
+        I am a french software engineer, living in Belfort. you can see
+        <a href="{% static 'game/CV_Loic_Souverain _software_engineer_en.pdf'%}" >my resume here</a>.
+    </p>
+    <h3>Why english ?</h3>
+    <p>
+        Well, to reach more people ! I started playing timebomb with people from different countries,
+        it would be a shame to exclude them. However, the rules of my timebomb are available in french too :)
+    </p>
+    <h3>What is that bar at the top ?</h3>
+    <p>
+        It shows how often each team in timebomb wins.
+    </p>
+    <h3>Why is there so few questions ?</h3>
+    <p>
+        Mmmh... Maybe I actually do not get <i>than many questions</i>... If you think something is missing,
+        or an answer is lacking details, feel free to send a mail to positive.feedback@legit.engineer :)
+    </p>
+
+{% endblock %}
