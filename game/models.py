@@ -48,7 +48,7 @@ class Game(models.Model):
         from random import shuffle
         if self.count_discovered != len(self.get_players()) and self.turn != 0:
             raise AssertionError("Next turn is forbidden right now")
-        if self.turn > 4:
+        if self.turn > 3:  # UUUUH I put 4 at first, but if this turn 4 before next_turn, it will be turn 5 after...
             raise AssertionError("Number of turn can not exceed 4")
         self.count_discovered = 0
         self.save(update_fields=['count_discovered'])
@@ -70,36 +70,37 @@ class Game(models.Model):
 
     def init_game(self):
         from random import shuffle
+        with transaction.atomic():  # should hopefully resolve bugs
+            game = Game.objects.select_for_update().filter(game=self)[0]
+            if game.turn != 0 or game.status != game.UNINITIALIZED:
+                raise AssertionError("Game already initialized")
 
-        if self.turn != 0 or self.status != self.UNINITIALIZED:
-            raise AssertionError("Game already initialized")
+            # init player team, set first player
+            players = list(game.get_players())
+            nb_players = len(players)
 
-        # init player team, set first player
-        players = list(self.get_players())
-        nb_players = len(players)
-
-        if nb_players in [4, 5]:
-            nb_blue = 3
-            nb_red = 2
-        elif nb_players == 6:
-            nb_blue = 4
-            nb_red = 2
-        elif nb_players in [7, 8]:
-            nb_blue = 5
-            nb_red = 3
-        else:
-            raise AssertionError("Number of player should be between 4 and 8")
-        colors = [Player.BLUE]*nb_blue + [Player.RED]*nb_red
-        shuffle(colors)
-        for i in range(nb_players):
-            players[i].team = colors[i]
-            players[i].save(update_fields=['team'])
-        self._create_deck()
-        shuffle(players)
-        self.next_player = players[0]
-        self.status = self.IN_PROGRESS
-        self.next_turn()
-        self.save()
+            if nb_players in [4, 5]:
+                nb_blue = 3
+                nb_red = 2
+            elif nb_players == 6:
+                nb_blue = 4
+                nb_red = 2
+            elif nb_players in [7, 8]:
+                nb_blue = 5
+                nb_red = 3
+            else:
+                raise AssertionError("Number of player should be between 4 and 8")
+            colors = [Player.BLUE]*nb_blue + [Player.RED]*nb_red
+            shuffle(colors)
+            for i in range(nb_players):
+                players[i].team = colors[i]
+                players[i].save(update_fields=['team'])
+            game._create_deck()
+            shuffle(players)
+            game.next_player = players[0]
+            game.status = game.IN_PROGRESS
+            game.next_turn()
+            game.save()
 
     def check_victory(self):
         discovered = Card.objects.filter(game=self).filter(discovered=True)
