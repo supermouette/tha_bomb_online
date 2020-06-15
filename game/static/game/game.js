@@ -11,10 +11,34 @@ let other_players = document.getElementsByClassName('other_player')
 url_img = {"n":url_nothing_img, "w": url_wire_img, "b": url_bomb_img}
 alt_img = {"n":"nothing", "w": 'wire', "b": 'bomb'}
 
+function should_play(){
+    current_player.classList.add('should_play');
+    for (card of document.getElementsByClassName('clickable_card')){
+        if (card.style.visibility == "hidden"){
+            card.style.cursor = 'default';
+        }
+        else{
+            card.style.cursor = 'grab';
+        }
+    }
+}
+
+function should_not_play(){
+    current_player.classList.remove('should_play');
+    for (card of document.getElementsByClassName('clickable_card')){
+        if (card.style.visibility == "hidden"){
+            card.style.cursor = 'default';
+        }
+        else{
+            card.style.cursor = 'not-allowed';
+        }
+    }
+}
+
 function make_claim(){
     console.log("making a claim...");
     // do as if claim was success
-    current_player.classList.remove('should_claim');
+    current_player.classList.remove('should_play');
     for (button of current_player.getElementsByTagName('button')){
                 button.disabled = true;
     }
@@ -42,7 +66,8 @@ function discover_card(event){
         var target = event.target || event.srcElement;
         // do as if it worked
         target.style.visibility = "hidden";
-        current_player.classList.remove('should_play');
+        //current_player.classList.remove('should_play');
+        should_not_play();
         // make request
         url = window.location.href+'/discover/'
         url += target.id.split('_')[1]+ "/";
@@ -52,7 +77,8 @@ function discover_card(event){
                 console.log("failure when discovering card : "+ data.status)
                 // revert
                 target.style.visibility = "visible";
-                current_player.classList.add('should_play');
+                //current_player.classList.add('should_play');
+                should_play();
             }
         });
     }
@@ -83,7 +109,8 @@ function refresh(){
         // clear classlist
         // ... for player
         current_player.classList.remove('should_claim');
-        current_player.classList.remove('should_play');
+        //current_player.classList.remove('should_play');
+        should_not_play();
         // ... for others
         for (other of other_players){
             other.classList.remove('should_claim');
@@ -134,7 +161,8 @@ function refresh(){
         }
         if (!claim){
             if (res['next_player']=="-1"){
-                current_player.classList.add('should_play');
+                //current_player.classList.add('should_play');
+                should_play();
             }
             else{
                 document.getElementById('player_'+res['next_player']).classList.add('should_play');
