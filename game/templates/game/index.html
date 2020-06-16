@@ -30,16 +30,16 @@
             </p>
             <img src="{% static 'game/demineur.png' %}" alt="screenshot from minesweeper">
         </div>
-        <div class="time_bomb">
-            <h2> Time Bomb online </h2>
-            <p>An online version of the game time bomb. Protect Big Ben from the bomb ! <br>
+        <div class="tha_Bomb">
+            <h2> Tha Bomb online </h2>
+            <p>An online game inspired by the board game time bomb.<br>
                 {% if user and not user.is_anonymous %}
                     <a href="{% url 'waiting_room' %}"> enter the waiting room</a>
                 {% else %}
                     <i>You have to be logged in to access this content.</i>
                 {% endif %}
             </p>
-            <div class="img_time_bomb">
+            <div class="img_tha_bomb">
                 <img src="{% static 'game/card_nothing_small.png' %}" alt="nothing">
                 <img src="{% static 'game/card_bomb_small.png' %}" alt="bomb" onclick="alert('Kabooom')">
                 <img src="{% static 'game/card_wire_small.png' %}" alt="wire">

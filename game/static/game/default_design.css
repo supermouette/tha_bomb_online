@@ -255,15 +255,15 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 10px;
 }
 
-.time_bomb{
+.tha_Bomb{
 
 }
 
-.time_bomb > h2{
+.tha_Bomb > h2{
     background-color: #0AA;
 }
 
-.img_time_bomb{
+.img_tha_bomb{
     margin: auto;
     margin-top: 30px;
     padding: 10px;
