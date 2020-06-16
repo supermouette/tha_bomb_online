@@ -1,4 +1,4 @@
-# time-bomb
+# Tha Bomb online
 
 This is the code of [legit.engineer](https://legit.engineer)
 The main part of this website is to host an online version of the game time bomb
