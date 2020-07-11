@@ -347,3 +347,7 @@ small > ul{
     font-weight: bold;
     color: red;
 }
+
+.table_tracker > tr > td{
+    padding: 10px;
+}

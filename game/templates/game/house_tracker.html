@@ -1,0 +1,37 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} House tracker {% endblock %}
+{% block content %}
+    <h1>House tracker</h1>
+
+    <h2>How to add row ?</h2>
+    <p>TODO</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Page Created</th>
+                <th>Page Visited</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody class="table_tracker">
+            {% for row in row_list %}
+            <tr>
+                <td>{{ row.title }}</td>
+                <td>{{ row.price }}</td>
+                <td>{{ row.page_created }}</td>
+                <td>{{ row.page_visited }}</td>
+                <td><a href="{{row.url}}">Link</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p> <a href="{% url 'house_tracker_csv' %}"> Download csv</a> </p>
+{% endblock %}
+
+
+{% block script %}
+    <!--<script src="{% static 'game/game.js' %}"></script> -->
+{% endblock %}
