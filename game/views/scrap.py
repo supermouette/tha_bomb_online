@@ -46,7 +46,7 @@ def house_tracker_csv(request):
     response['Content-Disposition'] = 'attachment; filename="house_tracker.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['Title', 'Price', 'Page created', 'Page visited', 'Link'])
+    writer.writerow(['Title', 'Price', 'ref', 'Page created', 'Page visited', 'Link'])
     for row in row_list:
-        writer.writerow([row.title, row.price, row.page_created, row.page_visited, row.url])
+        writer.writerow([row.title, row.price, row.ref, row.page_created, row.page_visited, row.url])
     return response
