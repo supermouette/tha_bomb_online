@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     house_tracker
-// @version  3
+// @version  4
 // @grant    none
 // ==/UserScript==
 
@@ -18,6 +18,8 @@ function register_offer(){
   page_created = path_article_header.children[1].innerText;
   ref = null;
 
+  url_img = path_article.firstChild.children[1].firstChild.firstChild.firstChild.firstChild.src;
+
   let criterias = path_article.children[5].children[1].children[0].children;
   console.log(criterias);
   for (crit of criterias){
@@ -31,7 +33,7 @@ function register_offer(){
   console.log(price);
   console.log(page_created);
   console.log(ref);
-
+  console.log(url_img);
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "https://legit.engineer/scrap", true);
@@ -48,7 +50,7 @@ function register_offer(){
     	user: USERNAME,
     	ref: ref,
     	url: document.URL,
-    	url-img: document.querySelectorAll('[alt="image-galerie-0"]')[0].src
+    	url_img: document.querySelectorAll('[alt="image-galerie-0"]')[0].src
   }));
 
 }

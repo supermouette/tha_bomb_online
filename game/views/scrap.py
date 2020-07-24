@@ -28,7 +28,7 @@ def scrap(request):
                             url=json_data['url'])
         if "ref" in json_data:
             scrap.ref = json_data['ref']
-        if "url-img" in json_data:
+        if "url_img" in json_data:
             print(json_data['url_img'])
             scrap.url_img = json_data['url_img']
         scrap.save()
