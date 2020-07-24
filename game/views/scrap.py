@@ -28,6 +28,8 @@ def scrap(request):
                             url=json_data['url'])
         if "ref" in json_data:
             scrap.ref = json_data['ref']
+        if "url_img" in json_data:
+            scrap.url_img = json_data['url_img']
         scrap.save()
     return HttpResponse(status=200)
 

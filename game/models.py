@@ -260,3 +260,4 @@ class ScrapedData(models.Model):
     ref = models.CharField(max_length=60, null=True, blank=True)
     page_visited = models.DateTimeField()
     url = models.CharField(max_length=100, null=True, blank=True)
+    url_img = models.CharField(max_length=100, null=True, blank=True)

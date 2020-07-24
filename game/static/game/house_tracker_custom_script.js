@@ -1,12 +1,16 @@
 // ==UserScript==
 // @name     house_tracker
-// @version  1
+// @version  2
 // @grant    none
 // ==/UserScript==
 
-USERNAME = "ludovic"
+USERNAME = "Ludo";
 
 function register_offer(){
+  //instead, I can use document.querySelectorAll('[data-qa-id]');
+ 	//loop over it, testing e.g. "adview_title" == elt.dataset.qaId
+  //it would leed to smaller code, more readable (but slower)
+
 	path_article = document.getElementById('grid').firstChild;
   path_article_header = path_article.firstChild.children[2];
   title = path_article_header.firstChild.firstChild.firstChild.innerText;
@@ -32,6 +36,11 @@ function register_offer(){
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "https://legit.engineer/scrap", true);
   xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onload = function () {
+  	alert('Request sent, status code : '+xhr.status);
+	};
+
   xhr.send(JSON.stringify({
       title: title,
     	price: price,
@@ -39,12 +48,13 @@ function register_offer(){
     	user: USERNAME,
     	ref: ref,
     	url: document.URL,
+    	url-img: document.querySelectorAll('[alt="image-galerie-0"]')[0].src
   }));
-  alert('saved succesfully');
 
 }
 
 function create_button(){
+
   var button = document. createElement("button");
   button.innerHTML = "Save";
   parent = document.getElementById('grid').firstChild;

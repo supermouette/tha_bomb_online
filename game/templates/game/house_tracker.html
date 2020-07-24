@@ -9,6 +9,7 @@
     <table>
         <thead>
             <tr>
+                <th>Image</th>
                 <th>Title</th>
                 <th>Price</th>
                 <th>Ref</th>
@@ -20,6 +21,7 @@
         <tbody class="table_tracker">
             {% for row in row_list %}
             <tr>
+                <td><img src="{{row.url_img}}" alt="{{row.url_img}}"></td>
                 <td>{{ row.title }}</td>
                 <td>{{ row.price }}</td>
                 <td>{{ row.ref }}</td>
