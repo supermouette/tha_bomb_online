@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name     house_tracker
-// @version  2
+// @version  3
 // @grant    none
 // ==/UserScript==
 
-USERNAME = "Ludo";
+USERNAME = "{{user.username}}";
 
 function register_offer(){
   //instead, I can use document.querySelectorAll('[data-qa-id]');

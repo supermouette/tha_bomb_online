@@ -29,7 +29,7 @@ urlpatterns = [
     path('scrap', views.scrap, name="scrap"),
     path('house_tracker', views.house_tracker, name="house_tracker"),
     path('house_tracker/csv', views.house_tracker_csv, name="house_tracker_csv"),
-
+    path('house_tracker.user.js', views.generate_custom_js, name="generate_custom_js"),
     url(r'^robots\.txt$', RedirectView.as_view(url='/static/game/robots.txt')),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/game/favicon.ico')),
 ]

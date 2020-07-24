@@ -35,6 +35,11 @@ def scrap(request):
 
 
 @login_required
+def generate_custom_js(request):
+    context = {'user': request.user}
+    return render(request, 'game/house_tracker.user.js', context)
+
+@login_required
 def house_tracker(request):
     row_list = ScrapedData.objects.filter(user=request.user)
     context = {'user': request.user, 'row_list': row_list}
