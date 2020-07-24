@@ -29,6 +29,7 @@ def scrap(request):
         if "ref" in json_data:
             scrap.ref = json_data['ref']
         if "url-img" in json_data:
+            print(json_data['url_img'])
             scrap.url_img = json_data['url_img']
         scrap.save()
     return HttpResponse(status=200)
@@ -37,7 +38,8 @@ def scrap(request):
 @login_required
 def generate_custom_js(request):
     context = {'user': request.user}
-    return render(request, 'game/house_tracker.user.js', context)
+    return render(request, 'game/house_tracker.user.js', context, content_type='application/javascript')
+
 
 @login_required
 def house_tracker(request):
