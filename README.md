@@ -6,7 +6,7 @@ The main part of this website is to host an online version of the game time bomb
 # How to install locally
 
 - clone the project
-- make sure you have python 3.7 installed
+- make sure you have python 3.11 installed
 - Install the requirements : ```pip install -r requirements.txt```
 - set correctly timebomb/settings.py :
   - you can comment HTTPS settings

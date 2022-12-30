@@ -1,7 +1,5 @@
-from django.urls import path
-from django.views.generic.base import TemplateView
+from django.urls import path, re_path
 from . import views
-from django.conf.urls import url
 from django.views.generic import RedirectView
 
 urlpatterns = [
@@ -30,6 +28,6 @@ urlpatterns = [
     path('house_tracker', views.house_tracker, name="house_tracker"),
     path('house_tracker/csv', views.house_tracker_csv, name="house_tracker_csv"),
     path('house_tracker.user.js', views.generate_custom_js, name="generate_custom_js"),
-    url(r'^robots\.txt$', RedirectView.as_view(url='/static/game/robots.txt')),
-    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/game/favicon.ico')),
+    re_path(r'^robots\.txt$', RedirectView.as_view(url='/static/game/robots.txt')),
+    re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/game/favicon.ico')),
 ]
