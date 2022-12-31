@@ -37,7 +37,7 @@ CSRF_COOKIE_SECURE = True
 DEBUG = False
 
 ALLOWED_HOSTS = ['legit.engineer', 'localhost']
-
+CSRF_TRUSTED_ORIGINS = ["https://legit.engineer"]
 
 # Application definition
 
