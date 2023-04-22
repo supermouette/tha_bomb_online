@@ -250,14 +250,3 @@ class Sky(models.Model):
 
     def __str__(self):
         return str(self.day) + '/' + str(self.month) + " ("+str(self.color) + ")"
-
-
-class ScrapedData(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=150)
-    price = models.IntegerField()
-    page_created = models.DateTimeField()
-    ref = models.CharField(max_length=60, null=True, blank=True)
-    page_visited = models.DateTimeField()
-    url = models.CharField(max_length=100, null=True, blank=True)
-    url_img = models.CharField(max_length=100, null=True, blank=True)
