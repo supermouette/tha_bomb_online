@@ -10,7 +10,21 @@ https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 import os
 
 from django.core.asgi import get_asgi_application
+from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.security.websocket import AllowedHostsOriginValidator
+from channels.auth import AuthMiddlewareStack
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'timebomb.settings')
+django_asgi_app = get_asgi_application()
 
-application = get_asgi_application()
+import game.urls
+
+application = ProtocolTypeRouter({
+    "http": django_asgi_app,
+    "websocket": AllowedHostsOriginValidator(
+            AuthMiddlewareStack(URLRouter(game.urls.websocket_urlpatterns))
+        ),
+    }
+)
+
+ASGI_APPLICATION = "timebomb.asgi.application"

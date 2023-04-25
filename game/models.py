@@ -250,3 +250,11 @@ class Sky(models.Model):
 
     def __str__(self):
         return str(self.day) + '/' + str(self.month) + " ("+str(self.color) + ")"
+
+class Clicker(models.Model):
+    name = models.CharField(max_length=30)
+    total = models.IntegerField(null=False, blank=False, default=0)
+    active_player = models.IntegerField(null=False, blank=False, default=0)
+
+    def __str__(self):
+        return self.name + ' - ' + str(self.total)

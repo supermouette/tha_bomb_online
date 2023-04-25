@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="{% static 'game/default_design.css' %}">
+    {% block more_css %}
+    {% endblock %}
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>

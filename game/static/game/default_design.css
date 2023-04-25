@@ -9,10 +9,6 @@
 
 }
 
-.label{
-
-}
-
 .day{
     display: inline-block;
 }
@@ -255,11 +251,15 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 10px;
 }
 
-.tha_Bomb{
-
+.tha_Bomb > h2{
+    background-color: #0AA;
 }
 
-.tha_Bomb > h2{
+.clicker {
+    flex: 1 100%;
+}
+
+.clicker > h2 {
     background-color: #0AA;
 }
 

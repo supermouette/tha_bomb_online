@@ -42,6 +42,8 @@ CSRF_TRUSTED_ORIGINS = ["https://legit.engineer"]
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
     'game',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,13 +82,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'timebomb.wsgi.application'
-
+ASGI_APPLICATION = 'timebomb.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+  'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env('DB_DB'),
         'USER': env('DB_USER'),
@@ -95,6 +97,17 @@ DATABASES = {
         'PORT': env('DB_PORT'),
     }
 }
+
+# Channels
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Password validation

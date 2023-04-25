@@ -1,0 +1,54 @@
+main{
+    background-color: #0aa;
+    height: 93vh;
+    border-radius: 0 0 10px 10px;
+    position: relative;
+}
+
+#win_bar{
+    display: none !important;
+}
+
+#middle{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 10rem;
+    font-weight: bold;
+    user-select: none;
+    color:white;
+    text-align: center;
+}
+
+#info{
+    font-size: 1rem;
+    font-weight: bold;
+    color:black
+}
+
+#click{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.up{
+    position: absolute;
+    color:white;
+    user-select: none;
+}
+
+.up_others{
+    position: absolute;
+    color:black;
+    user-select: none;
+}
+
+#contribution{
+    font-size: 1rem;
+    font-weight: bold;
+    color:black
+}

@@ -1,0 +1,102 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} clicker -- {{room.name}} {% endblock %}
+{% block more_css %}
+<link rel="stylesheet" href="{% static 'game/clicker.css' %}">
+{% endblock %}
+{% block content %}
+    <main>
+        <div id="middle">
+            <div id="total">{{room.total}}</span></div>
+            <div id="contribution">contribution: <span id="contribution_nb">0 (0%)</span></div>
+            <div id="info"><span id="active_player">{{room.active_player}}</span> active player</div>
+        </div>
+        <input id="click" type="button" value="Click">
+    </main>
+    <script src="{% static 'game/anime.min.js' %}"></script>
+    <script>
+        const room = "{{room.name}}";
+        const main = document.getElementsByTagName("main")[0];
+        const clickElt = document.querySelector('#click');
+        const totalElt = document.querySelector('#total');
+        const playersElt = document.querySelector('#active_player');
+        const contribution = document.querySelector('#contribution_nb');
+        const uuid = crypto.randomUUID()
+        var clickCounter = 0;
+
+        const socket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/clicker/'
+            + room
+            + '/'
+        );
+
+        socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            if (["clicker_player_up", "clicker_player_down"].includes(data.type)){
+                playersElt.innerHTML = data.total;
+            }
+            else if (data.type == "clicker_total_up"){
+                totalElt.innerHTML = data.total;
+                ;
+                const newDiv = document.createElement("div");
+                newDiv.innerHTML = "+1";
+                newDiv.id = "up-"+data.total
+                if (data.options.uuid == uuid){
+                    newDiv.classList.add("up");
+                    clickCounter += 1
+                }
+                else {
+                    newDiv.classList.add("up_others");
+                }
+                newDiv.style.top = data.options.coords[0];
+                newDiv.style.left = data.options.coords[1];
+                main.appendChild(newDiv);
+                contribution.innerHTML = `${clickCounter} (${parseInt(100*clickCounter/totalElt.innerHTML, 10)}%)`;
+                anime({
+                    targets: "#"+newDiv.id,
+                    autoplay: true,
+                    duration: 6000,
+                    opacity: 0,
+                    translateY: -100,
+                    complete: function(anime) {
+                        anime.animatables[0].target.remove()
+                    }
+                })
+            }
+        };
+
+        socket.onclose = function(e) {
+            console.error('socket closed unexpectedly');
+        };
+
+        socket.onopen = function() {
+            document.querySelector('#click').onclick = function(e) {
+                coords = [clickElt.offsetTop+25+"px", clickElt.offsetLeft+25+5-10*Math.random()+"px"]
+                socket.send(JSON.stringify({uuid, coords}));
+            };
+        }
+        
+        const maxTop = main.offsetHeight - 50;
+        const maxLeft = main.offsetWidth - 50;
+
+        function animate_btn() {
+            anime({
+                targets: '#click',
+                top: function() {
+                    return anime.random(0, maxTop);
+                },
+                left: function() {
+                    return anime.random(0, maxLeft);
+                },
+                easing: 'linear',
+                duration: 10000,
+                complete: animate_btn
+            });
+        }
+
+        animate_btn();
+
+    </script>
+{% endblock %}

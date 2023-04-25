@@ -1,6 +1,8 @@
 from django.urls import path, re_path
-from . import views
 from django.views.generic import RedirectView
+
+from . import views
+from . import consumers
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -24,6 +26,12 @@ urlpatterns = [
     path('game/create', views.create_game, name="create_game"),
     path('game/delete_unused', views.delete_unused, name='delete_unused'),
     path('game/rules', views.game_rules, name='game_rules'),
+    path('clicker/<str:room_name>', views.room_page, name="clicker"),
+
     re_path(r'^robots\.txt$', RedirectView.as_view(url='/static/game/robots.txt')),
     re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/game/favicon.ico')),
+]
+
+websocket_urlpatterns = [
+    re_path(r"ws/clicker/(?P<room>\w+)/$", consumers.ClickerConsumer.as_asgi()),
 ]
