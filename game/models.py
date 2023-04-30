@@ -258,3 +258,22 @@ class Clicker(models.Model):
 
     def __str__(self):
         return self.name + ' - ' + str(self.total)
+
+    def active_rewards(self):
+        return ClickerReward.objects.filter(threshold__lte=self.total)
+    
+    def next_reward(self):
+        r = ClickerReward.objects.filter(threshold__gt=self.total).order_by("threshold").first()
+        return r.threshold if r else None
+
+class ClickerReward(models.Model):
+    threshold = models.IntegerField(null=False)
+    name = models.CharField(max_length=50)
+    effect_type = models.CharField(max_length=20)
+    effect_value = models.CharField(max_length=50)
+
+    class Meta: 
+        ordering = ('threshold',)
+
+    def __str__(self):
+        return self.name + ' - ' + str(self.threshold)
