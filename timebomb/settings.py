@@ -34,7 +34,7 @@ CSRF_COOKIE_SECURE = True
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['legit.engineer', 'localhost']
 CSRF_TRUSTED_ORIGINS = ["https://legit.engineer"]
@@ -87,7 +87,7 @@ ASGI_APPLICATION = 'timebomb.asgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 db_engine = os.getenv('DB_ENGINE')
-print(db_engine)
+
 if db_engine == 'django.db.backends.sqlite3':
     DATABASES = {
       'default': {
