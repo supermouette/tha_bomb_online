@@ -12,7 +12,7 @@ const uuid = crypto.randomUUID();
 var clickCounter = 0;
 
 const socket = new WebSocket(
-  "ws://" + window.location.host + "/ws/clicker/" + room + "/"
+  "wss://" + window.location.host + "/ws/clicker/" + room + "/"
 );
 
 socket.onmessage = function (e) {
