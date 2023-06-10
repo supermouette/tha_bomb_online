@@ -13,7 +13,7 @@ def room_page(request, room_name):
         room = {"total": 0, "active_player": 1}
     
     active_rewards = [r for r in ClickerConsumer.rewards if r.threshold<= room["total"]]
-    print(room)
+
     return render(
         request,
         "game/clicker.html",
