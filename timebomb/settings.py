@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os, environ
+import os
+from dotenv import load_dotenv
 
-env = environ.Env()
-environ.Env.read_env()
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +23,7 @@ LOGIN_REDIRECT_URL = "/"
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # HTTPS settings
 
@@ -42,7 +42,6 @@ CSRF_TRUSTED_ORIGINS = ["https://legit.engineer"]
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
     'channels',
     'game',
     'django.contrib.admin',
@@ -87,7 +86,7 @@ ASGI_APPLICATION = 'timebomb.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-db_engine = env('DB_ENGINE', default='django.db.backends.sqlite3')
+db_engine = os.getenv('DB_ENGINE')
 
 if db_engine == 'django.db.backends.sqlite3':
     DATABASES = {
@@ -100,11 +99,11 @@ else:
     DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': env('DB_DB'),
-            'USER': env('DB_USER'),
-            'PASSWORD': env('DB_PASSWORD'),
-            'HOST': env('DB_HOST'),
-            'PORT': env('DB_PORT'),
+            'NAME': os.getenv('DB_DB'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
         }
     }
 

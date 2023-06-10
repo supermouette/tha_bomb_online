@@ -1,7 +1,9 @@
 django
-gunicorn
 psycopg2-binary
 django-environ
 channels
-daphne
+uvicorn[standard]
+gunicorn
 channels_redis
+attrs
+python-dotenv
