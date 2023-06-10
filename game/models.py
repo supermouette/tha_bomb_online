@@ -277,3 +277,6 @@ class ClickerReward(models.Model):
 
     def __str__(self):
         return self.name + ' - ' + str(self.threshold)
+    
+    def toDict(self):
+        return {"name": self.name, "threshold": self.threshold, "effect_type":self.effect_type, "effect_value":self.effect_value}
