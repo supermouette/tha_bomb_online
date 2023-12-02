@@ -142,7 +142,7 @@ function rewards(old_count, new_count) {
   }
   if (old_count <= 3 && new_count >= 4) {
     color_anime.pause();
-    main.style.backgroundColor = "hsl(180 100% 33.3%)";
+    main.style.backgroundColor = 'hsl(180 100% 33.3%)';
   }
   if (old_count <= 4 && new_count >= 5) {
     overlay_container.style.display = "block";
@@ -157,21 +157,11 @@ rewards(0, rewards_count.innerHTML);
 const overlay = document.querySelector("#overlay");
 const circle = document.querySelector("#overlay-circle");
 
-document.addEventListener("mousemove", function (event) {
-  const mouseX = event.clientX;
-  const mouseY = event.clientY;
 
-  circle.setAttribute("cx", mouseX);
-  circle.setAttribute("cy", mouseY - 50);
-});
+document.addEventListener('mousemove', function(event) {
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
 
-async function list_rooms() {
-  const room_list = document.querySelector("#room_list");
-  result = await fetch("/clicker_list");
-  room_list.innerHTML = result.data;
-}
-
-async function reset() {
-  result = await fetch("/clicker_reset");
-  location.reload();
-}
+    circle.setAttribute('cx', mouseX);
+    circle.setAttribute('cy', mouseY-50);    
+  });

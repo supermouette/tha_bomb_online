@@ -35,12 +35,8 @@
     </main>
     <div hidden id="room_name">{{room.name}}</div>
     <div hidden id="rewards_count">{{active_rewards|length}}</div>
-{% endblock %}
+    
 
-{% block footer %}
-    <button onclick="list_room()">list rooms</button>
-    <button onclick="reset()">reset all rooms</button>
-    <div id="room_list"></div>
 {% endblock %}
 
 {% block script %}

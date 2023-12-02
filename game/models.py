@@ -4,53 +4,30 @@ from django.db import transaction
 
 
 class Game(models.Model):
+
     UNINITIALIZED = "u"
     IN_PROGRESS = "i"
     STOPPED = "s"
     RED_WIN = "r"
     BLUE_WIN = "b"
 
-    STATUS_CHOICES = (
-        (UNINITIALIZED, "Uninitialized"),
-        (IN_PROGRESS, "In progress"),
-        (STOPPED, "Stopped"),
-        (RED_WIN, "Red win"),
-        (BLUE_WIN, "Blue win"),
-    )
+    STATUS_CHOICES = ((UNINITIALIZED, "Uninitialized"),
+                      (IN_PROGRESS, "In progress"),
+                      (STOPPED, "Stopped"),
+                      (RED_WIN, "Red win"),
+                      (BLUE_WIN, "Blue win"))
 
     turn = models.IntegerField(default=0)
     count_discovered = models.IntegerField(default=0)
-    next_player = models.ForeignKey(
-        "Player",
-        on_delete=models.SET_NULL,
-        default=None,
-        blank=True,
-        null=True,
-        related_name="+",
-    )
-    status = models.CharField(
-        max_length=1, choices=STATUS_CHOICES, default=UNINITIALIZED
-    )
+    next_player = models.ForeignKey('Player', on_delete=models.SET_NULL, default=None, blank=True, null=True,
+                                    related_name='+')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=UNINITIALIZED)
     name = models.CharField(max_length=30)
-    next_game = models.ForeignKey(
-        "Game", on_delete=models.SET_NULL, default=None, blank=True, null=True
-    )
-    last_card_cut = models.ForeignKey(
-        "Card",
-        on_delete=models.SET_NULL,
-        default=None,
-        blank=True,
-        null=True,
-        related_name="+",
-    )
-    last_player = models.ForeignKey(
-        "Player",
-        on_delete=models.SET_NULL,
-        default=None,
-        blank=True,
-        null=True,
-        related_name="+",
-    )
+    next_game = models.ForeignKey('Game', on_delete=models.SET_NULL, default=None, blank=True, null=True)
+    last_card_cut = models.ForeignKey('Card', on_delete=models.SET_NULL, default=None,
+                                      blank=True, null=True, related_name="+")
+    last_player = models.ForeignKey('Player', on_delete=models.SET_NULL, default=None,
+                                    blank=True, null=True, related_name="+")
 
     def get_players(self):
         return Player.objects.filter(game=self)
@@ -66,27 +43,24 @@ class Game(models.Model):
         for i in range(nb_players):
             Card(value=Card.WIRE, game=self, player=None).save()
         # nothing
-        for i in range(nb_players * 4 - 1):
+        for i in range(nb_players*4-1):
             Card(value=Card.NOTHING, game=self, player=None).save()
 
     def next_turn(self):
         from random import shuffle
-
         if self.count_discovered != len(self.get_players()) and self.turn != 0:
             raise AssertionError("Next turn is forbidden right now")
-        if (
-            self.turn > 3
-        ):  # UUUUH I put 4 at first, but if this turn 4 before next_turn, it will be turn 5 after...
+        if self.turn > 3:  # UUUUH I put 4 at first, but if this turn 4 before next_turn, it will be turn 5 after...
             raise AssertionError("Number of turn can not exceed 4")
         self.count_discovered = 0
-        self.save(update_fields=["count_discovered"])
+        self.save(update_fields=['count_discovered'])
         cards = list(Card.objects.filter(game=self).filter(discovered=False))
         shuffle(cards)
         players = list(self.get_players())
         for i in range(len(cards)):
             cards[i].player = players[i % len(players)]
             cards[i].order_in_hand = i // len(players)
-            cards[i].save(update_fields=["player", "order_in_hand"])
+            cards[i].save(update_fields=['player', 'order_in_hand'])
 
         for p in players:
             p.reset_claim()
@@ -94,11 +68,10 @@ class Game(models.Model):
         self.turn += 1
         # self.last_card_cut = None
         # self.last_player = None
-        self.save(update_fields=["turn"])  # , 'last_card_cut', 'last_player'])
+        self.save(update_fields=['turn']) # , 'last_card_cut', 'last_player'])
 
     def init_game(self):
         from random import shuffle
-
         with transaction.atomic():  # should hopefully resolve bugs
             game = Game.objects.select_for_update().filter(id=self.id)[0]
             if game.turn != 0 or game.status != game.UNINITIALIZED:
@@ -118,7 +91,7 @@ class Game(models.Model):
                 nb_red = 3
             else:
                 raise AssertionError("Number of player should be between 4 and 8")
-            colors = [Player.BLUE] * nb_blue + [Player.RED] * nb_red
+            colors = [Player.BLUE]*nb_blue + [Player.RED]*nb_red
             shuffle(colors)
             for i in range(nb_players):
                 players[i].team = colors[i]
@@ -139,7 +112,7 @@ class Game(models.Model):
         if wires.count() == self.get_players().count():
             self.status = self.BLUE_WIN
             self.create_next_game()
-        elif bomb.count() != 0 or discovered.count() == self.get_players().count() * 5:
+        elif bomb.count() != 0 or discovered.count() == self.get_players().count()*5:
             self.status = self.RED_WIN
             self.create_next_game()
         else:
@@ -151,15 +124,15 @@ class Game(models.Model):
         # create a reference to a new game, to allow a replay button
         if self.next_game is None:
             new_name = self.name
-            last_part = self.name.split(" ")[-1]
+            last_part = self.name.split(' ')[-1]
             if last_part.isdecimal():
-                last_part = str(int(last_part) + 1)
+                last_part = str(int(last_part)+1)
             else:
                 last_part += " 2"
-            if self.name.split(" ")[:-1] == []:
+            if self.name.split(' ')[:-1] == []:
                 new_name = last_part
             else:
-                new_name = " ".join(self.name.split(" ")[:-1]) + " " + last_part
+                new_name = ' '.join(self.name.split(' ')[:-1]) + " " + last_part
             if len(new_name) >= 30:
                 new_name = new_name[2:]  # because why not ?
             self.next_game = Game(name=new_name)
@@ -178,6 +151,7 @@ class Game(models.Model):
 
 
 class Player(models.Model):
+
     BLUE = "b"
     RED = "r"
     TEAM_CHOICES = ((BLUE, "Blue"), (RED, "Red"))
@@ -197,45 +171,28 @@ class Player(models.Model):
         with transaction.atomic():
             # It should be enough to select_for_update the card
             # If there is more bug, it might be useful to select_for_update the game and/or self
-            card = Card.objects.select_for_update().filter(
-                game=self.game,
-                order_in_hand=card_order,
-                player=player,
-                discovered=False,
-            )[0]
+            card = Card.objects.select_for_update().filter(game=self.game, order_in_hand=card_order, player=player, discovered=False)[0]
             game = Game.objects.select_for_update().filter(id=self.game.id)[0]
             if not game.is_ready_for_discover():
                 raise AssertionError("Not everybody has make a claim yet")
             if game.next_player != self:
-                raise AssertionError(
-                    "This is not " + str(self) + " turn. It is " + str(game.next_player)
-                )
+                raise AssertionError("This is not " + str(self) + " turn. It is "+str(game.next_player))
             if card.player == self:
                 raise AssertionError("Impossible to discover own card")
             if card.discovered:
                 raise AssertionError("Card already discovered")
             if game.status != Game.IN_PROGRESS:
-                raise AssertionError("Game is not in progress")
+                raise AssertionError('Game is not in progress')
 
             card.discovered = True
-            card.save(update_fields=["discovered"])
+            card.save(update_fields=['discovered'])
             game.count_discovered += 1
             game.next_player = player
             game.last_player = self
             game.last_card_cut = card
-            game.save(
-                update_fields=[
-                    "next_player",
-                    "count_discovered",
-                    "last_player",
-                    "last_card_cut",
-                ]
-            )
+            game.save(update_fields=["next_player", "count_discovered", "last_player", "last_card_cut"])
             game.check_victory()
-            if (
-                game.count_discovered % game.get_players().count() == 0
-                and game.status == Game.IN_PROGRESS
-            ):
+            if game.count_discovered % game.get_players().count() == 0 and game.status == Game.IN_PROGRESS:
                 game.next_turn()
             return card.value
 
@@ -267,6 +224,7 @@ class Player(models.Model):
 
 
 class Card(models.Model):
+
     NOTHING = "n"
     WIRE = "w"
     BOMB = "b"
@@ -284,14 +242,29 @@ class Card(models.Model):
 
 
 class Sky(models.Model):
+
     color = models.IntegerField()
     day = models.IntegerField()
     month = models.IntegerField()
     year = models.IntegerField()
 
     def __str__(self):
-        return str(self.day) + "/" + str(self.month) + " (" + str(self.color) + ")"
+        return str(self.day) + '/' + str(self.month) + " ("+str(self.color) + ")"
 
+class Clicker(models.Model):
+    name = models.CharField(max_length=30)
+    total = models.IntegerField(null=False, blank=False, default=0)
+    active_player = models.IntegerField(null=False, blank=False, default=0)
+
+    def __str__(self):
+        return self.name + ' - ' + str(self.total)
+
+    def active_rewards(self):
+        return ClickerReward.objects.filter(threshold__lte=self.total)
+    
+    def next_reward(self):
+        r = ClickerReward.objects.filter(threshold__gt=self.total).order_by("threshold").first()
+        return r.threshold if r else None
 
 class ClickerReward(models.Model):
     threshold = models.IntegerField(null=False)
@@ -299,16 +272,11 @@ class ClickerReward(models.Model):
     effect_type = models.CharField(max_length=20)
     effect_value = models.CharField(max_length=50)
 
-    class Meta:
-        ordering = ("threshold",)
+    class Meta: 
+        ordering = ('threshold',)
 
     def __str__(self):
-        return self.name + " - " + str(self.threshold)
-
+        return self.name + ' - ' + str(self.threshold)
+    
     def toDict(self):
-        return {
-            "name": self.name,
-            "threshold": self.threshold,
-            "effect_type": self.effect_type,
-            "effect_value": self.effect_value,
-        }
+        return {"name": self.name, "threshold": self.threshold, "effect_type":self.effect_type, "effect_value":self.effect_value}
