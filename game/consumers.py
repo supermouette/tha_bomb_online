@@ -2,10 +2,12 @@ import json
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from game.models import ClickerReward
+from django.shortcuts import get_object_or_404
+from game.models import Clicker, ClickerReward
 
 
 class ClickerConsumer(WebsocketConsumer):
+
     rooms = {}
     rewards = ClickerReward.objects.order_by("threshold").all()
 
@@ -18,7 +20,7 @@ class ClickerConsumer(WebsocketConsumer):
         else:
             room = {"total": 0, "active_player": 0}
             ClickerConsumer.rooms[self.room] = room
-
+            
         room["active_player"] += 1
 
         async_to_sync(self.channel_layer.group_add)(self.room_group, self.channel_name)
@@ -34,11 +36,12 @@ class ClickerConsumer(WebsocketConsumer):
         self.accept()
 
     def disconnect(self, close_code):
+
         if self.room in ClickerConsumer.rooms:
             room = ClickerConsumer.rooms[self.room]
         else:
             raise ValueError("roomp does not exist")
-
+        
         room["active_player"] -= 1
 
         async_to_sync(self.channel_layer.group_send)(
@@ -59,13 +62,9 @@ class ClickerConsumer(WebsocketConsumer):
         else:
             raise ValueError("roomp does not exist")
 
-        active_rewards = [
-            r for r in ClickerConsumer.rewards if r.threshold <= room["total"]
-        ]
+        active_rewards = [r for r in ClickerConsumer.rewards if r.threshold<= room["total"]]
 
-        click_power_upgrade = [
-            r for r in active_rewards if r.effect_type == "click_power"
-        ]
+        click_power_upgrade = [r for r in active_rewards if r.effect_type=="click_power"]
 
         click_power = 0
         if len(click_power_upgrade) == 0:
@@ -77,9 +76,9 @@ class ClickerConsumer(WebsocketConsumer):
 
         room["total"] += click_power
 
-        active_rewards = [
-            r for r in ClickerConsumer.rewards if r.threshold <= room["total"]
-        ]
+        active_rewards = [r for r in ClickerConsumer.rewards if r.threshold<= room["total"]]
+
+
 
         async_to_sync(self.channel_layer.group_send)(
             self.room_group,
@@ -88,9 +87,7 @@ class ClickerConsumer(WebsocketConsumer):
                 "total": room["total"],
                 "options": options,
                 "active_rewards": [r.name for r in active_rewards],
-                "next_reward": None
-                if len(ClickerConsumer.rewards) == len(active_rewards)
-                else ClickerConsumer.rewards[len(active_rewards)].threshold,
+                "next_reward": None if len(ClickerConsumer.rewards) == len(active_rewards) else ClickerConsumer.rewards[len(active_rewards)].threshold,
                 "click_power": click_power,
             },
         )
@@ -103,6 +100,3 @@ class ClickerConsumer(WebsocketConsumer):
 
     def clicker_total_up(self, event):
         self.send(text_data=json.dumps(event))
-
-    def reset_rooms(self):
-        ClickerConsumer.rooms = {}
