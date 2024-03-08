@@ -4,7 +4,7 @@
 {% block content %}
     <p>Heyyyyy ! This website is under construction, but there is already a few pages available :</p>
     <div class="front_wrapper">
-        {% if user and not user.is_superuser %}
+        {% if user and user.is_superuser %}
         <div class="japan">
             <h2>Skies of Japan</h2>
             <p><a href="{% url 'japan' %}">Higher quality that Denmark</a>, I swear</p>
