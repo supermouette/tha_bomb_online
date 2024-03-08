@@ -1,0 +1,28 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} Skies of Japan {% endblock %}
+{% block content %}
+    <div>
+        {% if user.is_superuser %}
+        <h2>Upload photo</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="photo" multiple accept="image/*"> </input>
+            <input type="submit" value="Upload">
+        </form>
+        
+
+        {% endif %}
+        <h1>Skies of Japan</h1>
+        <ul>
+        {% for img in imgs %}
+            <li>
+                <p>{{img.datetime}}</p>
+                <p>{{img.path}}</p>
+                <img src="{% static 'japan_img'%}/{{img.path}}" alt="img.path">
+                <p>{{img.gps}}</p>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
