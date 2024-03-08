@@ -4,6 +4,12 @@
 {% block content %}
     <p>Heyyyyy ! This website is under construction, but there is already a few pages available :</p>
     <div class="front_wrapper">
+        {% if user and not user.is_superuser %}
+        <div class="japan">
+            <h2>Skies of Japan</h2>
+            <p><a href="{% url 'japan' %}">Higher quality that Denmark</a>, I swear</p>
+          </div>
+        {% endif %}
         <div class="clicker">
             <h2>Clicker</h2>
             <p><a href="{% url 'clicker' room_name='default'%}">new stuff</a> in beta, experimenting with web sockets</p>

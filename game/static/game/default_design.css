@@ -263,6 +263,10 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: #0AA;
 }
 
+.japan > h2 {
+    background-color: #BC002D;
+}
+
 .img_tha_bomb{
     margin: auto;
     margin-top: 30px;
