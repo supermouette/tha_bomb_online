@@ -35,8 +35,7 @@ urlpatterns = [
     path("game/delete_unused", views.delete_unused, name="delete_unused"),
     path("game/rules", views.game_rules, name="game_rules"),
     path("clicker/<str:room_name>", views.room_page, name="clicker"),
-    path("clicker_list", views.get_room_list, name="clicker_list"),
-    path("clicker_reset", views.reset_rooms, name="clicker_reset"),
+
     path("japan", views.skies_of_japan, name="japan"),
     re_path(r"^robots\.txt$", RedirectView.as_view(url="/static/game/robots.txt")),
     re_path(r"^favicon\.ico$", RedirectView.as_view(url="/static/game/favicon.ico")),
