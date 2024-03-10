@@ -7,7 +7,7 @@
         <h2>Upload photo</h2>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="file" name="photo" multiple accept="image/*"> </input>
+            <input type="file" name="photo" multiple> </input>
             <input type="submit" value="Upload">
         </form>
         
@@ -19,7 +19,7 @@
             <li>
                 <p>{{img.datetime}}</p>
                 <p>{{img.path}}</p>
-                <img src="{% static 'japan_img'%}/{{img.path}}" alt="img.path">
+                <img src="media/japan/{{img.path}}" alt="{{img.path}}">
                 <p>{{img.gps}}</p>
             </li>
         {% endfor %}

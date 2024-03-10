@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 from django.views.generic import RedirectView
-
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 from . import consumers
 
@@ -39,7 +40,7 @@ urlpatterns = [
     path("japan", views.skies_of_japan, name="japan"),
     re_path(r"^robots\.txt$", RedirectView.as_view(url="/static/game/robots.txt")),
     re_path(r"^favicon\.ico$", RedirectView.as_view(url="/static/game/favicon.ico")),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 websocket_urlpatterns = [
     re_path(r"ws/clicker/(?P<room>\w+)/$", consumers.ClickerConsumer.as_asgi()),
