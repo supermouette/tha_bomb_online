@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.conf import settings
 
 
 def index(request):
@@ -88,7 +89,7 @@ def skies_of_japan(request):
     import os
     from PIL import Image, ExifTags
 
-    img_path = os.getenv("JAPAN_PATH")
+    img_path = settings.MEDIA_ROOT+'japan/'
 
     if request.method == 'POST':
         raw_imgs = request.FILES.getlist('photo')
@@ -108,6 +109,6 @@ def skies_of_japan(request):
         if img._getexif():
             exif = { ExifTags.TAGS[k]: v for k, v in img._getexif().items() if k in ExifTags.TAGS }
         # print(exif)
-        imgs.append({'path': p, 'datetime': exif.get("DateTime"), 'gps': exif.get("GPSInfo")})
+        imgs.append({'path': p, 'datetime': exif.get("DateTime"), 'gps':exif.get('GPSInfo')})
 
     return render(request, "japan/index.html", {"user": request.user, "imgs": imgs})
