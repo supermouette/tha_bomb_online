@@ -17,10 +17,10 @@
         <ul>
         {% for img in imgs %}
             <li>
-                <p>{{img.datetime}}</p>
-                <p>{{img.path}}</p>
-                <img src="media/japan/{{img.path}}" alt="{{img.path}}">
-                <p>{{img.gps}}</p>
+                <p>{{img.datetime}} (local time)</p>
+                {% if img.gps.alt %} <p>Altitude : {{img.gps.alt}}m</p> {% endif %}
+                <img src="media/japan/{{img.path}}" alt="{{img.path}}" style="height: 90vh;">
+                {% if img.maps %}<img src="media/japan/{{img.maps}}" alt="{{img.path}}" style="height: 90vh;"> {% endif %}
             </li>
         {% endfor %}
         </ul>

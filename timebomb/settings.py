@@ -27,14 +27,18 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # HTTPS settings
 
-# SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+DEBUG = os.getenv("DEBUG", False)
 
+# HTTPS settings
+if DEBUG:
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+else:
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
 ALLOWED_HOSTS = ['legit.engineer', 'localhost']
 CSRF_TRUSTED_ORIGINS = ["https://legit.engineer"]
@@ -160,7 +164,9 @@ MEDIA_URL = '/media/'
 
 if DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 else:
     STATIC_ROOT = '/var/www/legit.engineer/static'
     MEDIA_ROOT = '/var/www/legit.engineer/media/'
+
+MAPS_KEY = os.getenv("MAPS_KEY")
