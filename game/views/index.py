@@ -86,29 +86,53 @@ def skies_of_denmark(request):
 
 
 def skies_of_japan(request):
-    import os
+    import os, shutil, requests
     from PIL import Image, ExifTags
+    from math import nan
 
-    img_path = settings.MEDIA_ROOT+'japan/'
+    img_path = settings.MEDIA_ROOT + "japan/"
 
-    if request.method == 'POST':
-        raw_imgs = request.FILES.getlist('photo')
+    if request.method == "POST":
+        raw_imgs = request.FILES.getlist("photo")
         for raw in raw_imgs:
-            with open(img_path+str(raw), 'wb+') as destination:
+            with open(img_path + str(raw), "wb+") as destination:
                 for chunk in raw.chunks():
                     destination.write(chunk)
-            
-        
 
-
-    paths = os.listdir(img_path)
+    paths = [p for p in os.listdir(img_path) if not str(p).endswith('_map.png')]
     imgs = []
     for p in paths:
-        img = Image.open(img_path+os.sep+p)
+        img = Image.open(img_path + os.sep + p)
         exif = {}
         if img._getexif():
-            exif = { ExifTags.TAGS[k]: v for k, v in img._getexif().items() if k in ExifTags.TAGS }
-        # print(exif)
-        imgs.append({'path': p, 'datetime': exif.get("DateTime"), 'gps':exif.get('GPSInfo')})
+            exif = {
+                ExifTags.TAGS[k]: v
+                for k, v in img._getexif().items()
+                if k in ExifTags.TAGS
+            }
+        gps_raw = {}
+        for key in exif["GPSInfo"].keys():
+            decode = ExifTags.GPSTAGS.get(key, key)
+            gps_raw[decode] = exif["GPSInfo"][key]
+        print(exif)
+        try:
+            lat = sum([float(e) / 60**i for i, e in enumerate(gps_raw["GPSLatitude"])])
+            long = sum([float(e) / 60**i for i, e in enumerate(gps_raw["GPSLongitude"])])
+            alt = gps_raw["GPSAltitude"]
+            maps = p.split(".")[0]+"_map.png"
+
+            if request.method == "POST" and p in [str(s) for s in raw_imgs]:
+                url_static_map = f"https://maps.googleapis.com/maps/api/staticmap?center={lat},{long}&zoom=12&size=400x400&key={settings.MAPS_KEY}&markers={lat},{long}"
+                res_static_map = requests.get(url_static_map, stream = True)
+                with open(img_path+os.sep+maps,'wb') as f:
+                    shutil.copyfileobj(res_static_map.raw, f)
+                    
+        except ZeroDivisionError:
+            lat, long, alt, maps = nan, nan, None, None
+        
+        gps = {"lat": lat, "long": long, "alt": alt}
+        imgs.append({"path": p, "datetime": exif.get("DateTime"), "gps": gps, "maps": maps})
+
+    imgs.sort(key=lambda x: x["datetime"])
 
     return render(request, "japan/index.html", {"user": request.user, "imgs": imgs})
