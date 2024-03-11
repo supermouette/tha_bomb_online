@@ -1,6 +1,9 @@
 {% extends 'game/base.html' %}
 {% load static %}
 {% block title %} Skies of Japan {% endblock %}
+{% block more_css %}
+    <link rel="stylesheet" href="{% static 'game/japan.css' %}">
+{% endblock %}
 {% block content %}
     <div>
         {% if user.is_superuser %}
@@ -14,15 +17,41 @@
 
         {% endif %}
         <h1>Skies of Japan</h1>
-        <ul>
         {% for img in imgs %}
-            <li>
                 <p>{{img.datetime}} (local time)</p>
                 {% if img.gps.alt %} <p>Altitude : {{img.gps.alt}}m</p> {% endif %}
-                <img src="media/japan/{{img.path}}" alt="{{img.path}}" style="height: 90vh;">
-                {% if img.maps %}<img src="media/japan/{{img.maps}}" alt="{{img.path}}" style="height: 90vh;"> {% endif %}
-            </li>
+                <div class="img_container">
+                    <img src="media/japan/{{img.path}}" alt="{{img.path}}" class="main_img">
+                    {% if img.maps %}
+                        <img
+                            src="media/japan/{{img.maps}}"
+                            alt="{{img.maps}}"
+                            class="corner_img"
+                            onclick="open_modal('media/japan/{{img.maps}}')"
+                        >
+                    {% endif %}    
+                    <div class=corner_img_2 onclick="open_modal('media/japan/{{img.path}}')"><div class="child_rotated">↔</div></div>
+                </div>
         {% endfor %}
         </ul>
+        <div class="modal" id="popup">
+            <div class="modal-content">
+                <span class="close" onclick="close_modal()">&times;</span>
+                <img src="" alt="zoomed_in" id="zoomed_in">
+            </div>
+        </div>
     </div>
+{% endblock %}
+{% block script %}
+<script>
+    let popup = document.getElementById("popup")
+    let img_popup = document.getElementById("zoomed_in")
+    function open_modal(img_path){
+        popup.style.display = 'block'
+        img_popup.src = img_path
+    }
+    function close_modal(){
+        popup.style.display = 'none'
+    }
+</script>
 {% endblock %}
