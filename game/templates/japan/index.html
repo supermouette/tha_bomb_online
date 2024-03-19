@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{% static 'game/japan.css' %}">
 {% endblock %}
 {% block content %}
-    <div>
+    <div style="font-family: monospace;">
         {% if user.is_superuser %}
         <h3>Upload photo</h3>
         <br>
@@ -29,12 +29,12 @@
                     </div>
                     <div class="img_container">
                         <img src="media/japan/{{img.small}}" alt="{{img.small}}" class="main_img">
-                        {% if img.maps %}
+                        {% if img.map %}
                             <img
-                                src="media/japan/{{img.maps}}"
-                                alt="{{img.maps}}"
+                                src="media/japan/{{img.map_small}}"
+                                alt="{{img.map}}"
                                 class="corner_img"
-                                onclick="open_modal('media/japan/{{img.maps}}')"
+                                onclick="open_modal('media/japan/{{img.map}}')"
                             >
                         {% endif %}    
                         <div class=corner_img_2 onclick="open_modal('media/japan/{{img.path}}')"><div class="child_rotated">⇱</div></div>
@@ -48,7 +48,7 @@
         </div>
         <div class="modal" id="popup">
             <div class="modal-content">
-                <span class="close" onclick="close_modal()">&times;</span>
+                <div class="close" onclick="close_modal()">&times;</div>
                 <img src="" alt="zoomed_in" id="zoomed_in">
             </div>
         </div>
