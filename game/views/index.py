@@ -101,7 +101,11 @@ def skies_of_japan(request):
                 for chunk in raw.chunks():
                     destination.write(chunk)
 
-    paths = [p for p in os.listdir(img_path) if not str(p).endswith('_map.png')]
+    paths = [
+        p
+        for p in os.listdir(img_path)
+        if not str(p).endswith("_map.png") and not str(p).endswith("_small.webp")
+    ]
     imgs = []
     for p in paths:
         img = Image.open(img_path + os.sep + p)
@@ -119,22 +123,47 @@ def skies_of_japan(request):
                 decode = ExifTags.GPSTAGS.get(key, key)
                 gps_raw[decode] = exif["GPSInfo"][key]
             lat = sum([float(e) / 60**i for i, e in enumerate(gps_raw["GPSLatitude"])])
-            long = sum([float(e) / 60**i for i, e in enumerate(gps_raw["GPSLongitude"])])
+            long = sum(
+                [float(e) / 60**i for i, e in enumerate(gps_raw["GPSLongitude"])]
+            )
             alt = gps_raw["GPSAltitude"]
-            maps = p.split(".")[0]+"_map.png"
-
+            maps = p.split(".")[0] + "_map.png"
+            small =  p.split(".")[0] + "_small.webp"
             if request.method == "POST" and p in [str(s) for s in raw_imgs]:
                 url_static_map = f"https://maps.googleapis.com/maps/api/staticmap?center={lat},{long}&zoom=12&size=800x800&key={settings.MAPS_KEY}&markers={lat},{long}"
-                res_static_map = requests.get(url_static_map, stream = True)
-                with open(img_path+os.sep+maps,'wb') as f:
+                res_static_map = requests.get(url_static_map, stream=True)
+                with open(img_path + os.sep + maps, "wb") as f:
                     shutil.copyfileobj(res_static_map.raw, f)
-                    
+                full_size = img.size
+                small_img = img.resize((full_size[0]//4, full_size[1]//4), Image.Resampling.LANCZOS)
+                small_img.save(img_path + os.sep +small)
+                
+
         except (ZeroDivisionError, KeyError):
             lat, long, alt, maps = nan, nan, None, None
-        
+
         gps = {"lat": lat, "long": long, "alt": alt}
-        imgs.append({"path": p, "datetime": exif.get("DateTime", "zzz"), "gps": gps, "maps": maps})
+        imgs.append(
+            {
+                "path": p,
+                "datetime": exif.get("DateTime", "zzz zzz"),
+                "gps": gps,
+                "maps": maps,
+                "small": small
+            }
+        )
 
     imgs.sort(key=lambda x: x.get("datetime"))
 
-    return render(request, "japan/index.html", {"user": request.user, "imgs": imgs})
+    imgs_by_days = []
+    last_date = None
+    for img in imgs:
+        date, time = img["datetime"].split(" ")
+        date = "/".join(date.split(":")[::-1]) # sry
+        if date == last_date:
+            imgs_by_days[-1]["imgs"].append({**img, "time": time})
+        else:
+            imgs_by_days.append({"date": date, "imgs": [{**img, "time": time}]})
+            last_date = date
+
+    return render(request, "japan/index.html", {"user": request.user, "date_imgs": imgs_by_days})

@@ -7,7 +7,8 @@
 {% block content %}
     <div>
         {% if user.is_superuser %}
-        <h2>Upload photo</h2>
+        <h3>Upload photo</h3>
+        <br>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="file" name="photo" multiple> </input>
@@ -17,23 +18,34 @@
 
         {% endif %}
         <h1>Skies of Japan</h1>
-        {% for img in imgs %}
-                <p>{{img.datetime}} (local time)</p>
-                {% if img.gps.alt %} <p>Altitude : {{img.gps.alt}}m</p> {% endif %}
-                <div class="img_container">
-                    <img src="media/japan/{{img.path}}" alt="{{img.path}}" class="main_img">
-                    {% if img.maps %}
-                        <img
-                            src="media/japan/{{img.maps}}"
-                            alt="{{img.maps}}"
-                            class="corner_img"
-                            onclick="open_modal('media/japan/{{img.maps}}')"
-                        >
-                    {% endif %}    
-                    <div class=corner_img_2 onclick="open_modal('media/japan/{{img.path}}')"><div class="child_rotated">↔</div></div>
+        <div class="image_list">
+        {% for date_img in date_imgs %}
+        <h2>{{date_img.date}}</h2>
+            {% for img in date_img.imgs%}
+                <div class="image_display">
+                    <div class="img_metadata">
+                        <p>{{img.time}}</p>
+                        {% if img.gps.alt %} <p>{{img.gps.alt}}m</p> {% endif %}
+                    </div>
+                    <div class="img_container">
+                        <img src="media/japan/{{img.small}}" alt="{{img.small}}" class="main_img">
+                        {% if img.maps %}
+                            <img
+                                src="media/japan/{{img.maps}}"
+                                alt="{{img.maps}}"
+                                class="corner_img"
+                                onclick="open_modal('media/japan/{{img.maps}}')"
+                            >
+                        {% endif %}    
+                        <div class=corner_img_2 onclick="open_modal('media/japan/{{img.path}}')"><div class="child_rotated">⇱</div></div>
+                    </div>
                 </div>
+                {% if not forloop.last %}
+                    <div class="sep"></div>
+                {% endif %}
+            {% endfor %}
         {% endfor %}
-        </ul>
+        </div>
         <div class="modal" id="popup">
             <div class="modal-content">
                 <span class="close" onclick="close_modal()">&times;</span>

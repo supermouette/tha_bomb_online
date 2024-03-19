@@ -1,3 +1,22 @@
+.image_display {
+    width: fit-content;
+    margin:auto;
+}
+
+.img_metadata > p {
+    color: white;
+    background-color: #0AA;
+    border-radius: 20px;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.img_metadata {
+    display: flex;
+    justify-content: space-between;
+}
+
 .img_container {
   display: inline-block;
   position: relative;
@@ -7,6 +26,7 @@
   max-width: 90vw;
   width: auto;
   vertical-align: top;
+  border-radius:10px;
 }
 
 .corner_img {
@@ -15,25 +35,31 @@
   right: 0;
   height: 20%;
   cursor: grab;
+  border-bottom-right-radius:10px;
+}
+
+.corner_img:hover {
+    height: 70%;
 }
 
 .corner_img_2 {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 20%;
+    top: 0;
+    right: 0;
+    height: 10%;
     aspect-ratio: 1;
     cursor: grab;
     background-color: rgba(0.5, 0.5, 0.5, 0.2);
     color:white;
-    font-size: 4em;
+    font-size: 2em;
     text-align: center;
     vertical-align: middle;
-    align-items:center
+    align-items:center;
+    border-top-right-radius: 10px;
   }
 
 .child_rotated{
-    transform: rotate(-45deg);
+    transform:scaleX(-1);
     display: inline-block;
     height: 100%;
     vertical-align: middle;
@@ -54,15 +80,17 @@
 
 .modal-content {
   background-color: #fefefe;
-  margin: 10% auto; /* Center modal on screen */
+  margin: 5% auto; /* Center modal on screen */
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Adjust width of modal */
+  width: 90%; /* Adjust width of modal */
+  border-radius: 10px;
 }
 
 #zoomed_in {
     margin:auto;
-    width: 80%;
+    max-width: 90%;
+    display: block;
 }
 
 .close {
@@ -77,4 +105,16 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.sep {
+    border-bottom: 1px #555 solid;
+    height: 20px;
+    width: 20%;
+    margin:auto;
+}
+
+h2 {
+    margin-top: 30px;
+    text-align: center;
 }
