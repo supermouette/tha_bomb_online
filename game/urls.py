@@ -38,6 +38,7 @@ urlpatterns = [
     path("clicker/<str:room_name>", views.room_page, name="clicker"),
 
     path("japan", views.skies_of_japan, name="japan"),
+    path("japan_reset", views.reset_skies_of_japan, name="japan_reset"),
     re_path(r"^robots\.txt$", RedirectView.as_view(url="/static/game/robots.txt")),
     re_path(r"^favicon\.ico$", RedirectView.as_view(url="/static/game/favicon.ico")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

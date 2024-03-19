@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf import settings
 
@@ -104,7 +104,9 @@ def skies_of_japan(request):
     paths = [
         p
         for p in os.listdir(img_path)
-        if not str(p).endswith("_map.png") and not str(p).endswith("_small.webp")
+        if not str(p).endswith("_map.png")
+        and not str(p).endswith("_small.webp")
+        and not str(p).endswith("_map_small.png")
     ]
     imgs = []
     for p in paths:
@@ -127,20 +129,23 @@ def skies_of_japan(request):
                 [float(e) / 60**i for i, e in enumerate(gps_raw["GPSLongitude"])]
             )
             alt = gps_raw["GPSAltitude"]
-            maps = p.split(".")[0] + "_map.png"
-            small =  p.split(".")[0] + "_small.webp"
+            map = p.split(".")[0] + "_map.png"
+            map_small = p.split(".")[0] + "_map_small.png"
+            small = p.split(".")[0] + "_small.webp"
             if request.method == "POST" and p in [str(s) for s in raw_imgs]:
-                url_static_map = f"https://maps.googleapis.com/maps/api/staticmap?center={lat},{long}&zoom=12&size=800x800&key={settings.MAPS_KEY}&markers={lat},{long}"
-                res_static_map = requests.get(url_static_map, stream=True)
-                with open(img_path + os.sep + maps, "wb") as f:
-                    shutil.copyfileobj(res_static_map.raw, f)
+                for size, map_name, zoom in [(640, map, 12), (200, map_small, 12)]:
+                    url_static_map = f"https://maps.googleapis.com/maps/api/staticmap?center={lat},{long}&zoom={zoom}&size={size}x{size}&key={settings.MAPS_KEY}&markers={lat},{long}"
+                    res_static_map = requests.get(url_static_map, stream=True)
+                    with open(img_path + os.sep + map_name, "wb") as f:
+                        shutil.copyfileobj(res_static_map.raw, f)
                 full_size = img.size
-                small_img = img.resize((full_size[0]//4, full_size[1]//4), Image.Resampling.LANCZOS)
-                small_img.save(img_path + os.sep +small)
-                
+                small_img = img.resize(
+                    (full_size[0] // 4, full_size[1] // 4), Image.Resampling.LANCZOS
+                )
+                small_img.save(img_path + os.sep + small)
 
         except (ZeroDivisionError, KeyError):
-            lat, long, alt, maps = nan, nan, None, None
+            lat, long, alt, map, map_small, small = nan, nan, None, None, None, None
 
         gps = {"lat": lat, "long": long, "alt": alt}
         imgs.append(
@@ -148,8 +153,9 @@ def skies_of_japan(request):
                 "path": p,
                 "datetime": exif.get("DateTime", "zzz zzz"),
                 "gps": gps,
-                "maps": maps,
-                "small": small
+                "map": map,
+                "map_small": map_small,
+                "small": small,
             }
         )
 
@@ -159,11 +165,25 @@ def skies_of_japan(request):
     last_date = None
     for img in imgs:
         date, time = img["datetime"].split(" ")
-        date = "/".join(date.split(":")[::-1]) # sry
+        date = "/".join(date.split(":")[::-1])  # sry
         if date == last_date:
             imgs_by_days[-1]["imgs"].append({**img, "time": time})
         else:
             imgs_by_days.append({"date": date, "imgs": [{**img, "time": time}]})
             last_date = date
 
-    return render(request, "japan/index.html", {"user": request.user, "date_imgs": imgs_by_days})
+    return render(
+        request, "japan/index.html", {"user": request.user, "date_imgs": imgs_by_days}
+    )
+
+def reset_skies_of_japan(request):
+    from os import listdir, path, remove, sep
+    if not request.user.is_superuser:
+        return HttpResponse(status=401)
+    
+    img_path = settings.MEDIA_ROOT + "japan/"
+    for filename in listdir(img_path):
+        if path.isfile(img_path+sep+filename):
+            remove(img_path+sep+filename)
+    return redirect('japan')
+
