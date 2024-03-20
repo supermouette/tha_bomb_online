@@ -37,6 +37,7 @@
   cursor: grab;
   border-radius:10px;
   opacity: 0.85;
+  min-height: 10vh;
 }
 
 .corner_img:hover {
