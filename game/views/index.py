@@ -163,7 +163,7 @@ def skies_of_japan(request):
 
     imgs_by_days = []
     last_date = None
-    for img in imgs[::-1]:
+    for img in imgs:
         date, time = img["datetime"].split(" ")
         date = "/".join(date.split(":")[::-1])  # sry
         if date == last_date:
