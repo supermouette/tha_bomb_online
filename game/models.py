@@ -280,3 +280,13 @@ class ClickerReward(models.Model):
     
     def toDict(self):
         return {"name": self.name, "threshold": self.threshold, "effect_type":self.effect_type, "effect_value":self.effect_value}
+
+class Friend(models.Model):
+    name = models.CharField(max_length=50, null=False)
+    description = models.CharField(max_length=500, null=True, blank=True)
+    unrevelant_info = models.CharField(max_length=500, null=True, blank=True)
+    website = models.CharField(max_length=200, null=True, blank=True)
+    popularity = models.IntegerField(default=0, null=False)
+
+    def __str__(self):
+        return self.name

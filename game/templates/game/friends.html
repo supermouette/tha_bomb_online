@@ -1,0 +1,69 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} Friends {% endblock %}
+{% block more_css %}
+<style>
+button {
+  background-color: white; /* Green */
+  border: none;
+  color: blue;
+  cursor: pointer;
+}
+</style>
+{% endblock %}
+{% block content %}
+<h2>Exhaustive list of all my friends</h2>
+
+<ul id="friend-list">
+    {% for f in friends %}
+    <li id="{{f.id}}" popularity="{{f.popularity}}">
+        {% if forloop.first %}
+        ⭐⭐⭐
+        {% endif %}
+        {{f.name}}
+        {% if f.unrevelant_info %}
+        <small>{{f.unrevelant_info}}</small>
+        {% endif %}
+        {% if f.website%}
+        <a href="{{f.website}}">[website]</a>
+        {% endif %}
+        <button onclick="popularity_update({{f.id}})">
+            ▲ (<span id="popularity-{{f.id}}">{{f.popularity}}</span>)
+        </button>
+        
+    </li>
+    {% endfor %}
+</ul>
+
+<h3>Friends ranking</h3>
+
+<p> If you feel like a friend of mine should be higher on the list, feel free to upvote him.</p>
+
+<h3>You think that you should appear here ?</h3>
+<p> send a Formal Resquest to positive.feedback@legit.engineer with a Proof of Friendship</p>
+{% endblock %}
+
+{% block script %}
+<script>
+    friend_list = document.getElementById("friend-list");
+    popularity = {}
+    Array.from(friend_list.children).forEach(elt => {
+        popularity[elt.id] = [parseInt(elt.attributes.popularity.value), document.getElementById("popularity-"+elt.id), elt]
+    });
+
+    function popularity_update(id){
+        fetch('/friends/'+id).then(
+                response => {
+                    response.text().then(new_val => {
+                        popularity[id][1].innerHTML = new_val
+                        popularity[id][0] = parseInt(new_val)
+                        Object.values(popularity).sort((a, b)=> a[0] - b[0]).map(elt => elt[2]).forEach(elt=> friend_list.prepend(elt))
+                    })
+                }
+            )
+        
+    }
+</script>
+{% endblock %}
+
+{% block footer %} I'm going to a party this week end, so hopefully I will make more friends{% endblock %}

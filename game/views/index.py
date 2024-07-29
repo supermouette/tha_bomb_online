@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.conf import settings
 
@@ -176,14 +176,28 @@ def skies_of_japan(request):
         request, "japan/index.html", {"user": request.user, "date_imgs": imgs_by_days}
     )
 
+
 def reset_skies_of_japan(request):
     from os import listdir, path, remove, sep
+
     if not request.user.is_superuser:
         return HttpResponse(status=401)
-    
+
     img_path = settings.MEDIA_ROOT + "japan/"
     for filename in listdir(img_path):
-        if path.isfile(img_path+sep+filename):
-            remove(img_path+sep+filename)
-    return redirect('japan')
+        if path.isfile(img_path + sep + filename):
+            remove(img_path + sep + filename)
+    return redirect("japan")
 
+
+def friends(request):
+    from game.models import Friend
+    context = {"friends": Friend.objects.order_by("-popularity")}
+    return render(request, "game/friends.html", context)
+
+def friend_add_popularity(request, friend_id):
+    from game.models import Friend
+    f = get_object_or_404(Friend, pk = friend_id)
+    f.popularity += 1
+    f.save()
+    return HttpResponse(f.popularity)
