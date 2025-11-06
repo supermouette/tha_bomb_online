@@ -1,0 +1,12 @@
+<h1>Je ne fais pas confiance aux parents -<br> Je propose un prénom</h1>
+<p>Une proposition par personne - 1 vote par jour</p>
+<ol>
+    {%for suggestion in name_suggestion %}
+        <li>{{suggestion.name}}
+            <button onclick="popularity_update('{{suggestion.name}}')" class="popularity-button">
+            ▲ (<span id="popularity-{{suggestion.name}}">{{suggestion.popularity}}</span>)
+            </button>
+        </li>
+    {% endfor %}
+    <p>Ma proposition <input id="user_suggestion_input"> <button id="send_button" onclick="validate_suggestion()">je propose</button></p>
+</ol>

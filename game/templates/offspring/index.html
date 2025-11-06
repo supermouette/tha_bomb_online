@@ -1,0 +1,38 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} Skies of Japan {% endblock %}
+{% block more_css %}
+    <link rel="stylesheet" href="{% static 'game/offspring/offspring.css' %}" />
+{% endblock %}
+{% block content %}
+<h1>Compte à rebour du 15 janvier</h1>
+<p id="countdown_parent"> <span id="countdown"> </span></p>
+    <div id="main-flex">
+        <section>
+            {% include 'offspring/bet.html' %}
+                <h1>Liste de naissance</h1>
+                <div id="gift">
+                    <img src="https://www.mesenvies.fr/files/2346706/1wPSsIt1T4k0GLqv_2880.jpg" width="400">
+                    <a href="https://www.mesenvies.fr/liste-naissance/29376190" target="_blank">Cliquez ici</a>
+                </div>
+        </section>
+        <section id="name_guess">
+            {% include 'offspring/name_guess.html' %}
+        </section>
+        <section>
+            {% include 'offspring/name_suggestion.html' %}
+        </section>
+    </div>
+    
+
+{% endblock %}
+{% block script %}
+    {% if guess_is_active %}
+    <script src="{% static 'game/offspring/name_guess.js' %}"></script>
+    {% endif %}
+    <script src="{% static 'game/offspring/countdown.js' %}"></script>
+    <script src="{% static 'game/offspring/name_suggestion.js' %}"></script>
+    <script src="{% static 'game/offspring/bet.js' %}"></script>
+
+
+{% endblock %}
