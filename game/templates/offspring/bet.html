@@ -1,0 +1,47 @@
+<h1>Pariez !</h1>
+<p>Sachant que c'est prévu pour le 15 Janvier, <br>pariez sur l'heure et la date exacte</p>
+
+<p>
+    Nom <input id="input-bet-name" placeholder="Pour qu'on puisse reconnaitre le gagnant">
+    <br>Date et heure
+        <input
+            id="input-bet-date"
+            type="datetime-local"
+            min="2025-12-01T00:00"
+            max="2026-01-31T23:59"
+        >
+    <br><button id="input-bet-button" onclick="placeBet()">Envoyer</button> (vous n'aurez qu'un seul essai)
+</p>
+
+<table id="bet_table">
+    {% for month_label, month_number, year, days in bet_range %}
+    <tr>
+        {% for d in days %}
+            <td class="bet_details" id="{{year}}-{{month_number}}-{{d}}_00h–6h"></td>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for d in days %}
+            <td class="bet_details" id="{{year}}-{{month_number}}-{{d}}_06h–12h"></td>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for d in days %}
+            <td class="bet_details" id="{{year}}-{{month_number}}-{{d}}_12h–18h"></td>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for d in days %}
+            <td class="bet_details" id="{{year}}-{{month_number}}-{{d}}_18h–00h"></td>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for d in days %}
+            <td id="day-header-{{month_number}}-{{d}}">{{d}}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th colspan="31">{{month_label}}</th>
+    </tr>
+    {% endfor %}
+</table>

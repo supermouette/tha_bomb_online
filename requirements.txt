@@ -1,9 +1,0 @@
-django
-psycopg2-binary
-django-environ
-channels
-uvicorn[standard]
-gunicorn
-channels_redis
-attrs
-python-dotenv

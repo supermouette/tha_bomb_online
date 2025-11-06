@@ -36,12 +36,28 @@ urlpatterns = [
     path("game/delete_unused", views.delete_unused, name="delete_unused"),
     path("game/rules", views.game_rules, name="game_rules"),
     path("clicker/<str:room_name>", views.room_page, name="clicker"),
-
     path("japan", views.skies_of_japan, name="japan"),
     path("japan_reset", views.reset_skies_of_japan, name="japan_reset"),
     path("friends", views.friends, name="friends"),
-    path("friends/<int:friend_id>", views.friend_add_popularity, name="friend_add_popularity"),
-
+    path(
+        "friends/<int:friend_id>",
+        views.friend_add_popularity,
+        name="friend_add_popularity",
+    ),
+    path("offspring", views.offspring, name="offspring"),
+    path("offspring/guess/<str:guessed_name>", views.guess_name, name="guess_name"),
+    path(
+        "offspring/suggestion/<str:suggested_name>",
+        views.make_suggestion,
+        name="make_suggestion",
+    ),
+    path(
+        "offspring/suggestion/<str:suggested_name>/upvote",
+        views.upvote_suggestion,
+        name="upvote_suggestion",
+    ),
+    path("offspring/get_bet/<str:name_hash>", views.get_histogram_bet, name="get_bet"),
+    path("offspring/place_bet", views.place_bet, name="place_bet"),
     re_path(r"^robots\.txt$", RedirectView.as_view(url="/static/game/robots.txt")),
     re_path(r"^favicon\.ico$", RedirectView.as_view(url="/static/game/favicon.ico")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,153 @@
+#main-flex {
+  display: -webkit-flex;
+  display: flex;
+  /*margin-left: 15px;*/
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#main-flex > section {
+  min-width: 320px;
+  margin-right: 20px;
+}
+
+#name_guess_table {
+  border-collapse: collapse;
+}
+
+.name_guess_letter {
+  border: black 3px solid;
+  width: 50px;
+  height: 50px;
+  font-size: 25px;
+  padding: 3px;
+}
+
+.wrong_place {
+  background-color: aqua;
+  border-radius: 50px;
+}
+
+.correct {
+  background-color: lightgreen;
+}
+
+#input-area {
+  margin-top: 20px;
+}
+
+#input-area > div > div {
+  display: inline-block;
+  font-size: 23px;
+  margin: 3px;
+  padding: 5px;
+  border: #444 1px solid;
+  border-radius: 3px;
+  color: #444;
+}
+
+.keyboard-row {
+  display: flex;
+  flex-wrap: nowrap; /* Keep items on one line */
+  justify-content: center; /* Centers horizontally */
+  overflow-x: auto; /* Optional: allow horizontal scroll if too long */
+}
+
+.popularity-button {
+  background-color: white; /* Green */
+  border: none;
+  color: blue;
+  cursor: pointer;
+}
+
+.popularity-button-disabled {
+  color: gray;
+  cursor: not-allowed;
+}
+
+#countdown {
+  font-size: 4em;
+}
+
+#countdown_parent {
+  text-align: center;
+}
+
+.firework {
+  position: absolute;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, white, transparent);
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(0.3);
+    opacity: 0;
+  }
+}
+
+th {
+  border: 1px solid;
+}
+
+td {
+  font-size: 9px;
+}
+
+.bet_details {
+  height: 10px;
+}
+
+#input-bet-name {
+  width: 300px;
+}
+
+#day-header-01-15 {
+  background-color: aqua;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 1000px) {
+  #name_guess {
+    order: -1;
+  }
+  #main-flex {
+    flex-direction: column;
+  }
+  #main-flex > section {
+    min-width: 320px;
+  }
+}
+
+#gift > img {
+  max-width: 96vw;
+}
+
+#gift {
+  position: relative;
+  width: 400px;
+  max-width: 96vw;
+}
+
+/* Bottom left text */
+#gift > a {
+  display: block;
+  position: absolute;
+  top: 71%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  color: blue;
+}

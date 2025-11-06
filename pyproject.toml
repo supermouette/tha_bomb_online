@@ -1,0 +1,21 @@
+[project]
+name = "tha-bomb-online"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13.7"
+dependencies = [
+    "attrs>=25.3.0",
+    "channels>=4.3.1",
+    "channels-redis>=4.3.0",
+    "django>=5.2.6",
+    "django-environ>=0.12.0",
+    "djlint>=1.36.4",
+    "gunicorn>=23.0.0",
+    "pillow>=11.3.0",
+    "pip>=25.2",
+    "psycopg2-binary>=2.9.10",
+    "python-dotenv>=1.1.1",
+    "requests>=2.32.5",
+    "uvicorn[standard]>=0.36.0",
+]

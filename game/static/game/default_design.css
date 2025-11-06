@@ -1,357 +1,389 @@
-#skybox{
-    margin: auto;
-    width: 70%;
+#skybox {
+  margin: auto;
+  width: 70%;
 }
 
-.sky{
-    height:100px;
-    width:100px;
-
+.sky {
+  height: 100px;
+  width: 100px;
 }
 
-.day{
-    display: inline-block;
+.day {
+  display: inline-block;
 }
 
-footer{
-    margin-top: 50px;
+footer {
+  margin-top: 50px;
 }
 
-header{
-    color: white;
-    background-color: #0AA;
-    overflow: auto;
+header {
+  color: white;
+  background-color: #0aa;
+  overflow: auto;
 }
 
-header h1{
-    font-size: 2em;
-    font-weight: bold;
-    /*width: 80%;*/
-    display: inline-block;
-    margin: 0px;
-    padding-left: 5px;
+header h1 {
+  font-size: 2em;
+  font-weight: bold;
+  /*width: 80%;*/
+  display: inline-block;
+  margin: 0px;
+  padding-left: 5px;
 }
 
-h1 a{
-    color: white;
-    text-decoration: none;
+h1 a {
+  color: white;
+  text-decoration: none;
 }
 
-.userinfo{
-    text-align: right;
-    float: right;
-    padding-top: 10px;
-    padding-bottom: 3px;
-    padding-right: 2px;
+.userinfo {
+  text-align: right;
+  float: right;
+  padding-top: 10px;
+  padding-bottom: 3px;
+  padding-right: 2px;
 }
 
-.userinfo a{
-    color: white;
+.userinfo a {
+  color: white;
 }
 
-td{
-    text-align: center;
+td {
+  text-align: center;
 }
 
-.card_placeholder{
-    height: 150px;
-    width: 100px;
-    padding: 5px;
-    margin: 10px;
-    border: dashed 4px #555;
-    display: inline-block;
-    border-radius: 5px;
+.card_placeholder {
+  height: 150px;
+  width: 100px;
+  padding: 5px;
+  margin: 10px;
+  border: dashed 4px #555;
+  display: inline-block;
+  border-radius: 5px;
 }
 
-.card_placeholder_other_player{
-    height: 75px;
-    width: 50px;
-    padding: 5px;
-    margin: 10px;
-    border: dashed 4px #555;
-    display: inline-block;
-    border-radius: 5px;
+.card_placeholder_other_player {
+  height: 75px;
+  width: 50px;
+  padding: 5px;
+  margin: 10px;
+  border: dashed 4px #555;
+  display: inline-block;
+  border-radius: 5px;
 }
 
-.card_placeholder_discovered{
-    height: 75px;
-    width: 50px;
-    padding: 5px;
-    margin: 10px;
-    /*border: dashed 4px #555;*/
-    display: inline-block;
+.card_placeholder_discovered {
+  height: 75px;
+  width: 50px;
+  padding: 5px;
+  margin: 10px;
+  /*border: dashed 4px #555;*/
+  display: inline-block;
 }
 
-.placeholder_last_cut{
-    height: 80px;
-    width: 100px;
-    padding: 5px;
-    margin: 10px;
-    display: inline-block;
-    border-left: solid black 2px;
-    vertical-align: top;
-
+.placeholder_last_cut {
+  height: 80px;
+  width: 100px;
+  padding: 5px;
+  margin: 10px;
+  display: inline-block;
+  border-left: solid black 2px;
+  vertical-align: top;
 }
 
-#last_player{
-    font-weight: bold;
+#last_player {
+  font-weight: bold;
 }
 
-#last_card_value{
-    font-weight: bold;
+#last_card_value {
+  font-weight: bold;
 }
 
-#last_card_owner{
-    font-weight: bold;
+#last_card_owner {
+  font-weight: bold;
 }
 
-.discovered_text{
-    font-size: 1.5em;
+.discovered_text {
+  font-size: 1.5em;
 }
 
 .wrapper {
-    display: flex;
-    flex-flow: row wrap;
-    text-align: center;
-    /*background: #BDDBD0;*/
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
+  /*background: #BDDBD0;*/
 }
 
 .wrapper > * {
-    padding: 10px;
-    flex: 1 100%;
-    margin: 10px;
-    border-radius: 15px;
+  padding: 10px;
+  flex: 1 100%;
+  margin: 10px;
+  border-radius: 15px;
 }
 
 #discovered_cards {
-    background: #AF9AB2;
+  background: #af9ab2;
 }
 
 #current_player {
-    background: #C5EFCB;
+  background: #c5efcb;
 }
 
 .other_player {
-    background: #A4BFEB;
+  background: #a4bfeb;
 }
 
 @media screen and (max-width: 800px) {
-    .other_player { flex: 1 0 0; }
-    .front_wrapper > * {
-        flex: 1 100% !important;
-    }
-    .time_bomb {order: -1;}
-    .spinner > h2{
-        white-space: normal !important;
-    }
-    .minesweeper > img{
-        max-width: 90%;
-    }
+  .other_player {
+    flex: 1 0 0;
+  }
+  .front_wrapper > * {
+    flex: 1 100% !important;
+  }
+  .time_bomb {
+    order: -1;
+  }
+  .spinner > h2 {
+    white-space: normal !important;
+  }
+  .minesweeper > img {
+    max-width: 90%;
+  }
 }
 
-@media screen and (min-width: 801px){
-    .wrapper {flex-flow: row wrap-reverse;}
-    #discovered_cards { flex: 1 30%; }
-    #current_player { flex: 3 90%; }
-    .other_player {flex: 1 30%;}
+@media screen and (min-width: 801px) {
+  .wrapper {
+    flex-flow: row wrap-reverse;
+  }
+  #discovered_cards {
+    flex: 1 30%;
+  }
+  #current_player {
+    flex: 3 90%;
+  }
+  .other_player {
+    flex: 1 30%;
+  }
 
-    #current_player { order: 0; }
-    #discovered_cards { order: 10; }
-    .box_1 {order: 1;}
-    .box_2 {order: 11;}
-    .box_3 {order: 12;}
-    .box_4 {order: 13;}
-    .box_5 {order: 14;}
-    .box_6 {order: 15;}
-    .box_7 {order: 16;}
+  #current_player {
+    order: 0;
+  }
+  #discovered_cards {
+    order: 10;
+  }
+  .box_1 {
+    order: 1;
+  }
+  .box_2 {
+    order: 11;
+  }
+  .box_3 {
+    order: 12;
+  }
+  .box_4 {
+    order: 13;
+  }
+  .box_5 {
+    order: 14;
+  }
+  .box_6 {
+    order: 15;
+  }
+  .box_7 {
+    order: 16;
+  }
 }
 
-.should_claim{
-    border: solid red 2px;
-    background: #ff8547 !important;
+.should_claim {
+  border: solid red 2px;
+  background: #ff8547 !important;
 }
 
-.should_play{
-    border: solid blue 2px;
-    background: #ffb347 !important;
+.should_play {
+  border: solid blue 2px;
+  background: #ffb347 !important;
 }
 
 input[type="number"] {
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-    appearance: textfield;
-    width: 15px;
-
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  width: 15px;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
 
-.blue_victory{
-    color: blue;
-    font-weight: bold;
-    font-size: 2em;
+.blue_victory {
+  color: blue;
+  font-weight: bold;
+  font-size: 2em;
 }
 
-.red_victory{
-    color: red;
-    font-weight: bold;
-    font-size: 2em;
+.red_victory {
+  color: red;
+  font-weight: bold;
+  font-size: 2em;
 }
 
-#win_bar{
-    margin: auto;
-    margin-top: 5px;
-    height: 5px;
-    display: flex;
-    width: 50%;
-    align: center;
+#win_bar {
+  margin: auto;
+  margin-top: 5px;
+  height: 5px;
+  display: flex;
+  width: 50%;
+  align: center;
 }
 
-#blue_bar{
-    background-color: blue;
-    width: 50%;
-    height: 5px;
-    display: inline-block;
-
+#blue_bar {
+  background-color: blue;
+  width: 50%;
+  height: 5px;
+  display: inline-block;
 }
 
-#red_bar{
-    background-color: red;
-    flex-grow: 1;
-    height: 5px;
-    display: inline-block;
+#red_bar {
+  background-color: red;
+  flex-grow: 1;
+  height: 5px;
+  display: inline-block;
 }
 
 .front_wrapper {
-    display: flex;
-    flex-flow: row wrap;
-    text-align: center;
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
 }
 
 .front_wrapper > * {
-    flex: 1 30%;
-    margin: 10px;
-    border-radius: 15px;
-    background: #f0f4f5;
+  flex: 1 30%;
+  margin: 10px;
+  border-radius: 15px;
+  background: #f0f4f5;
 }
 
-.front_wrapper > * > h2{
-    background: #ff6e14;
-    color: white;
-    margin: 0px;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    white-space: nowrap;
+.front_wrapper > * > h2 {
+  background: #ff6e14;
+  color: white;
+  margin: 0px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  white-space: nowrap;
 }
 
-.front_wrapper > * > p{
-    padding: 10px;
+.front_wrapper > * > p {
+  padding: 10px;
 }
 
-.tha_Bomb > h2{
-    background-color: #0AA;
+.tha_Bomb > h2 {
+  background-color: #0aa;
 }
 
 .clicker {
-    flex: 1 100%;
+  flex: 1 100%;
 }
 
 .clicker > h2 {
-    background-color: #0AA;
+  background-color: #0aa;
 }
 
 .japan > h2 {
-    background-color: #BC002D;
+  background-color: #bc002d;
 }
 
-.img_tha_bomb{
-    margin: auto;
-    margin-top: 30px;
-    padding: 10px;
-    width: 315px;
+.offspring {
+  flex: 1 100%;
 }
 
-.iframe_container{
-    position: relative;
-    width: 90%;
-    height: 0;
-    padding-bottom: 50%;
-    margin: 10px;
+.img_tha_bomb {
+  margin: auto;
+  margin-top: 30px;
+  padding: 10px;
+  width: 315px;
 }
 
-.iframe_container > iframe{
-    position: absolute;
-    top: 0;
-    left: 0;
-    border: 0px;
-    width: 100%;
-    height: 100%;
+.iframe_container {
+  position: relative;
+  width: 90%;
+  height: 0;
+  padding-bottom: 50%;
+  margin: 10px;
 }
 
-.auth_form{
-    margin: auto;
-    text-align: center;
-    width: 90%;
+.iframe_container > iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0px;
+  width: 100%;
+  height: 100%;
 }
 
-.auth_form > label{
-    font-size: 22px;
+.auth_form {
+  margin: auto;
+  text-align: center;
+  width: 90%;
 }
 
-.auth_form > small{
-    font-size: 18px;
+.auth_form > label {
+  font-size: 22px;
 }
 
-small > ul{
-    margin: 0px;
+.auth_form > small {
+  font-size: 18px;
 }
 
-.auth_form > input[type=text], .auth_form > input[type=password]{
-    font-size: 20px;
-    border-radius: 10px;
+small > ul {
+  margin: 0px;
 }
 
-.auth_form > button, .auth_form > input[type=submit]{
-    font-size: 20px;
-    color: white;
-    background: #0aa;
+.auth_form > input[type="text"],
+.auth_form > input[type="password"] {
+  font-size: 20px;
+  border-radius: 10px;
 }
 
-.language_chooser > img{
-    border: solid blue 2px;
-    margin: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+.auth_form > button,
+.auth_form > input[type="submit"] {
+  font-size: 20px;
+  color: white;
+  background: #0aa;
 }
 
-.tips{
-    background: #eee;
-    margin-left: 40px;
-    padding: 10px;
-    border-radius: 15px;
+.language_chooser > img {
+  border: solid blue 2px;
+  margin: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.tips:before{
-    display:inline-block;
-    content: url('/static/game/lightbulb.svg');
-    width: 15px;
-    height: 15px;
-    margin: 5px;
+.tips {
+  background: #eee;
+  margin-left: 40px;
+  padding: 10px;
+  border-radius: 15px;
 }
 
-.blue_desc{
-    font-weight: bold;
-    color: blue;
+.tips:before {
+  display: inline-block;
+  content: url("/static/game/lightbulb.svg");
+  width: 15px;
+  height: 15px;
+  margin: 5px;
 }
 
-.red_desc{
-    font-weight: bold;
-    color: red;
+.blue_desc {
+  font-weight: bold;
+  color: blue;
 }
 
-.table_tracker > tr > td{
-    padding: 10px;
+.red_desc {
+  font-weight: bold;
+  color: red;
+}
+
+.table_tracker > tr > td {
+  padding: 10px;
 }

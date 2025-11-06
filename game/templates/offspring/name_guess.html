@@ -1,0 +1,67 @@
+
+<h1>Devinez le prénom</h1>
+<p>Du 16 Novembre au 16 Décembre,<br> un prenom par jour à deviner. <br>Le vrai prénom se cache dans la liste...</p>
+{% if guess_is_active %}
+<table id="name_guess_table">
+    {% for i in guess_max_try_range %}
+    <tr>
+        {% for j in guess_word_length_range %}
+            {% if j == 0 %}
+                <td class="name_guess_letter">{{guess_first_letter}}</td>
+            {% else %}
+                <td class="name_guess_letter"> </td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+<div id="input-area">
+    <div class="keyboard-row">
+        <div onclick="virtualKey('A')">A</div>
+        <div onclick="virtualKey('Z')">Z</div>
+        <div onclick="virtualKey('E')">E</div>
+        <div onclick="virtualKey('R')">R</div>
+        <div onclick="virtualKey('T')">T</div>
+        <div onclick="virtualKey('Y')">Y</div>
+        <div onclick="virtualKey('U')">U</div>
+        <div onclick="virtualKey('I')">I</div>
+        <div onclick="virtualKey('O')">O</div>
+        <div onclick="virtualKey('P')">P</div>
+    </div>
+    <div class="keyboard-row">
+        <div onclick="virtualKey('Q')">Q</div>
+        <div onclick="virtualKey('S')">S</div>
+        <div onclick="virtualKey('D')">D</div>
+        <div onclick="virtualKey('F')">F</div>
+        <div onclick="virtualKey('G')">G</div>
+        <div onclick="virtualKey('H')">H</div>
+        <div onclick="virtualKey('J')">J</div>
+        <div onclick="virtualKey('K')">K</div>
+        <div onclick="virtualKey('L')">L</div>
+        <div onclick="virtualKey('M')">M</div>
+    </div>
+    <div class="keyboard-row">
+        <div onclick="virtualKey('.')">.</div>
+        <div onclick="virtualKey('W')">W</div>
+        <div onclick="virtualKey('X')">X</div>
+        <div onclick="virtualKey('C')">C</div>
+        <div onclick="virtualKey('V')">V</div>
+        <div onclick="virtualKey('B')">B</div>
+        <div onclick="virtualKey('N')">N</div>
+        <div onclick="virtualKey('BACKSPACE')" class="special-input">⌫</div>
+        <div onclick="virtualKey('ENTER')" class="special-input">↲</div>
+    </div>
+</div>
+<p id="gameover"></p>
+{% endif %}
+{% if names_guessed|length > 0 %}
+<div>
+    <h3>Prénoms déjà devinés</h3>
+    <ul>
+        {% for name in names_guessed %}
+            <li>{{name.name}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
