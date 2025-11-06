@@ -99,7 +99,6 @@ async function load() {
       addLetter(word[j]);
     }
     await fillWord(resultCodes[i], false);
-    console.log(word);
     try_nb += 1;
     column_idx = 1;
     current_row =
