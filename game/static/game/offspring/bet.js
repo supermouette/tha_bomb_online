@@ -36,6 +36,7 @@ async function placeBet() {
   let date_bet = document.getElementById("input-bet-date").value;
   if (date_bet == "") {
     alert("vérifiez que la date et l'heure soient correctement remplies");
+    return;
   }
   let name_hash = await hashString(name);
   await fetch("/offspring/place_bet", {
