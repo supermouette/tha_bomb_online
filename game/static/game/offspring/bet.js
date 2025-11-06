@@ -34,38 +34,21 @@ fetch("/offspring/get_bet/" + betHash).then((response) => {
 async function placeBet() {
   let name = document.getElementById("input-bet-name").value;
   let date_bet = document.getElementById("input-bet-date").value;
-
+  if (date_bet == "") {
+    alert("vérifiez que la date et l'heure soient correctement remplies");
+  }
   let name_hash = await hashString(name);
   await fetch("/offspring/place_bet", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRFToken": getCookie("csrftoken"),
     },
     body: JSON.stringify({ name, date_bet, name_hash }),
-    credentials: "same-origin",
   });
   localStorage.setItem("betHash", name_hash);
   localStorage.setItem("betName", name);
   localStorage.setItem("betDate", date_bet);
   document.location.reload();
-}
-
-// https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
-function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    var cookies = document.cookie.split(";");
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      // Does this cookie string begin with the name we want?
-      if (cookie.substring(0, name.length + 1) === name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
 }
 
 async function hashString(inputString) {

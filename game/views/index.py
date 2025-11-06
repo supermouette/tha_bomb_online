@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.exceptions import BadRequest
 from django.db.models.functions import ExtractHour, TruncDate, Concat, Cast
 from django.db.models import Count, Case, When, Value, CharField
+from django.views.decorators.csrf import csrf_exempt
 
 import datetime
 import json
@@ -327,6 +328,7 @@ def upvote_suggestion(request, suggested_name):
     return JsonResponse({"new_popularity": suggestion.popularity})
 
 
+@csrf_exempt
 def place_bet(request):
     from game.models import ArrivalBet
 
