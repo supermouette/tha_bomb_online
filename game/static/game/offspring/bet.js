@@ -38,6 +38,10 @@ async function placeBet() {
     alert("vérifiez que la date et l'heure soient correctement remplies");
     return;
   }
+  if (name == "") {
+    alert("vérifiez que votre nom est renseigné");
+    return;
+  }
   let name_hash = await hashString(name);
   await fetch("/offspring/place_bet", {
     method: "POST",
