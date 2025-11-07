@@ -9,6 +9,10 @@ if (proposition) {
   inputBtn.disabled = true;
 }
 function validate_suggestion() {
+  if (inputElt.value == "") {
+    alert("Le champ est vide");
+    return;
+  }
   fetch("/offspring/suggestion/" + inputElt.value).then((response) => {
     if (response.status == 200) {
       localStorage.setItem("proposition", inputElt.value);
