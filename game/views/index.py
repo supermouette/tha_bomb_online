@@ -238,10 +238,12 @@ def offspring(request):
     ]
 
     if len(name_to_guess_query) == 0:
+        names_guessed.sort(key=lambda x: (-x.points, -x.votes, x.guess_date))
         guess_context = {
             "guess_is_active": False,
             "names_guessed": names_guessed,
             "bet_range": bet_range,
+            "guess_finished": len(names_guessed) != 0,
         }
     else:
         name_to_guess = name_to_guess_query[0].name
@@ -305,6 +307,23 @@ def guess_name(request, guessed_name: str):
         name_obj.save()
 
     return JsonResponse(jsonResponse)
+
+
+def vote_guess_name(request, top1, top2, top3):
+    from game.models import NameToGuess
+
+    if len({top1, top2, top3}) != 3:
+        raise BadRequest("Cannot vote for same name multiple time")
+
+    top = [(top1, 3), (top2, 2), (top3, 1)]
+
+    for top_name, points in top:
+        name = NameToGuess.objects.get(name=top_name)
+        name.points += points
+        name.votes += 1
+        name.save()
+
+    return HttpResponse()
 
 
 def make_suggestion(request, suggested_name):

@@ -1,6 +1,48 @@
 
 <h1>Devinez le prénom</h1>
+{% if guess_finished %}
+<p> Le jeu est terminé, le vrai prénom se cache parmis les {{names_guessed|length}} prénoms devinés</p>
+<p> Vous pouvez désormais choisir votre top 3 !</p>
+    <table>
+        <tr>
+            <td class="td-rank">1er : </td>
+            <td>
+                <select name="top_1" id="top_1">
+                {% for name in names_guessed %}
+                    <option value="{{name.name}}">{{name.name}}</option>
+                {% endfor %}
+                </select>
+            </td>
+            <td>(3 pt)</td>
+        </tr>
+        <tr>
+            <td  class="td-rank">2eme : </td>
+            <td>
+                <select name="top_2" id="top_2">
+                {% for name in names_guessed %}
+                    <option value="{{name.name}}">{{name.name}}</option>
+                {% endfor %}
+                </select>
+            </td>
+            <td>(2 pt)</td>
+        </tr>
+        <tr>
+            <td  class="td-rank">3eme : </td>
+            <td>
+                <select name="top_3" id="top_3">
+                {% for name in names_guessed %}
+                    <option value="{{name.name}}">{{name.name}}</option>
+                {% endfor %}
+                </select>
+            </td>
+            <td>(1 pt)</td>
+        </tr>
+    </table>
+    <button id="send_top_button" onclick="vote_name_guess()">Je vote</button>
+</p>
+{% else %}
 <p>Du 16 Novembre au 16 Décembre,<br> un prenom par jour à deviner. <br>Le vrai prénom se cache dans la liste...</p>
+{% endif %}
 {% if guess_is_active %}
 <table id="name_guess_table">
     {% for i in guess_max_try_range %}
@@ -57,9 +99,18 @@
 {% if names_guessed|length > 0 %}
 <div>
     <h3>Prénoms déjà devinés</h3>
-    <ul>
+    <ul class="name_guess_list_wrapper">
         {% for name in names_guessed %}
-            <li>{{name.name}}</li>
+            <li >
+                <div class="name_guess_list">
+                    <span> {{name.name}} </span>
+                    {% if guess_finished %}
+                    <span class="name_guess_status">
+                        {{name.points}} pt - {{name.votes}} votes
+                    </span>
+                    {% endif %}
+                </div>
+            </li> 
         {% endfor %}
     </ul>
 </div>

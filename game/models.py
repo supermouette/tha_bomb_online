@@ -353,6 +353,8 @@ class NameToGuess(models.Model):
     name = models.CharField(max_length=15, null=False)
     guess_date = models.DateField(null=False)
     nb_guessed = models.IntegerField(default=0)
+    points = models.IntegerField(default=0)
+    votes = models.IntegerField(default=0)
 
     class Meta:
         ordering = ["guess_date"]

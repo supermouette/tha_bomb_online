@@ -102,7 +102,7 @@ th {
   border: 1px solid;
 }
 
-td {
+.day-header {
   font-size: 9px;
 }
 
@@ -150,4 +150,26 @@ td {
   transform: translate(-50%, -50%);
   font-size: 30px;
   color: blue;
+}
+
+.td-rank {
+  text-align: left;
+}
+
+.name_guess_list_wrapper {
+  list-style-type: disc;
+}
+
+.name_guess_list {
+  display: grid;
+  list-style: disc;
+  grid-template-columns: minmax(0, 15ch) auto;
+  align-items: left;
+  list-style-type: disc;
+  align-items: center;
+}
+
+.name_guess_status {
+  font-size: 0.8em;
+  color: #555;
 }

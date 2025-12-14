@@ -29,6 +29,8 @@
 {% block script %}
     {% if guess_is_active %}
     <script src="{% static 'game/offspring/name_guess.js' %}"></script>
+    {% elif guess_finished %}
+    <script src="{% static 'game/offspring/name_guess_vote.js' %}"></script>
     {% endif %}
     <script src="{% static 'game/offspring/countdown.js' %}"></script>
     <script src="{% static 'game/offspring/name_suggestion.js' %}"></script>

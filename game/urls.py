@@ -47,6 +47,11 @@ urlpatterns = [
     path("offspring", views.offspring, name="offspring"),
     path("offspring/guess/<str:guessed_name>", views.guess_name, name="guess_name"),
     path(
+        "offspring/guess_vote/<str:top1>/<str:top2>/<str:top3>",
+        views.vote_guess_name,
+        name="guess_name_vote",
+    ),
+    path(
         "offspring/suggestion/<str:suggested_name>",
         views.make_suggestion,
         name="make_suggestion",
