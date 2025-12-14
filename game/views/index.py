@@ -402,7 +402,7 @@ def get_histogram_bet(request, name_hash):
             user_bin = "12h–18h"
         else:
             user_bin = "18h–00h"
-        user_bet_bucket = str(user_bet.date_bet.date) + "_" + user_bin
+        user_bet_bucket = str(user_bet.date_bet.date()) + "_" + user_bin
     else:
         user_bet_bucket = None
 

@@ -33,7 +33,7 @@ fetch("/offspring/get_bet/" + betHash).then((response) => {
       if (elt) {
         elt.style.backgroundColor = `rgb(255, ${color}, ${color})`;
       } else {
-        console.log(`elt user_bet ${bin.date_bucket} not found`);
+        console.log(`elt user_bet ${data.user_bet_bucket} not found`);
       }
     }
   });
