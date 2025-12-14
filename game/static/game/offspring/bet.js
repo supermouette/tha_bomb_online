@@ -20,8 +20,12 @@ fetch("/offspring/get_bet/" + betHash).then((response) => {
     for (bin of histogram) {
       let color = 255 - 255 * (bin.count / max_value);
       let elt = document.getElementById(bin.date_bucket);
-      elt.style.backgroundColor = `rgb(${color}, 255, ${color})`;
-      elt.title = bin.count;
+      if (elt) {
+        elt.style.backgroundColor = `rgb(${color}, 255, ${color})`;
+        elt.title = bin.count;
+      } else {
+        console.log(`elt ${bin.date_bucket} not found`);
+      }
     }
     if (data.user_bet_id) {
       let color = 255 - 255 * (bin.count / max_value);
