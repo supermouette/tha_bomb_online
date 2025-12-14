@@ -27,9 +27,9 @@ fetch("/offspring/get_bet/" + betHash).then((response) => {
         console.log(`elt ${bin.date_bucket} not found`);
       }
     }
-    if (data.user_bet_id) {
+    if (data.user_bet_bucket) {
       let color = 255 - 255 * (bin.count / max_value);
-      let elt = document.getElementById(bin.date_bucket);
+      let elt = document.getElementById(data.user_bet_bucket);
       if (elt) {
         elt.style.backgroundColor = `rgb(255, ${color}, ${color})`;
       } else {

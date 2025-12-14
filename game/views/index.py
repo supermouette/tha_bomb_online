@@ -391,7 +391,7 @@ def get_histogram_bet(request, name_hash):
     )
 
     user_bets = ArrivalBet.objects.filter(name_hash=name_hash)
-    user_bet_id = None
+    user_bet_bucket = None
     if len(user_bets) > 0:
         user_bet = user_bets[0]
         if user_bet.date_bet.hour < 6:
@@ -402,8 +402,10 @@ def get_histogram_bet(request, name_hash):
             user_bin = "12h–18h"
         else:
             user_bin = "18h–00h"
-        user_bet_id = str(user_bet.date_bet) + user_bin
+        user_bet_bucket = str(user_bet.date_bet.date) + "_" + user_bin
     else:
-        date_bet = None
+        user_bet_bucket = None
 
-    return JsonResponse({"histogram": list(histogram), "user_bet_id": user_bet_id})
+    return JsonResponse(
+        {"histogram": list(histogram), "user_bet_bucket": user_bet_bucket}
+    )
