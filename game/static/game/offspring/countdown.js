@@ -5,7 +5,7 @@ let release_date = new Date("2026-01-15T00:00:01+01:00");
 
 function updateCountdown() {
   const now = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "Europe/Paris" })
+    new Date().toLocaleString("en-US", { timeZone: "Europe/Paris" }),
   );
 
   distance = release_date - now;
@@ -16,7 +16,7 @@ function updateCountdown() {
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
   const hours = Math.floor(
-    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
   );
   const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((distance % (1000 * 60)) / 1000);

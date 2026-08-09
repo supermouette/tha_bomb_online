@@ -1,0 +1,69 @@
+{% extends 'game/base.html' %}
+{% load static %}
+{% block title %} 🎉🎉🎉 {% endblock %}
+{% block more_css %}
+    <link rel="stylesheet" href="{% static 'game/birthday.css' %}" />
+    <link rel="stylesheet" href="{% static 'game/offspring/offspring.css' %}" />
+{% endblock %}
+{% block content %}
+ <div id="main-flex">
+ <section id="name_guess">
+    <h1> étape 1 </h1>
+    {% include 'offspring/name_guess.html' %}
+ </section>
+ <section>
+    <h1> étape 2 </h1>
+    {% include 'game/crossword.html' %}
+</section>
+ <section>
+    <h1> étape 3 </h1>
+    <p> Vous pouvez maintenant deviner le cadeau ! </p>
+    <input type="text" id="gift_guess_input" placeholder="Votre réponse">
+    <button id="gift_guess_button" onclick="guess_gift()">Je devine</button>
+    <p id="gift_guess_result"></p>
+    <img style="display: none;" src="{% static 'game/cadeau_sylvie.png' %}" width="400">
+</section>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'game/offspring/name_guess.js' %}"></script>
+    <script>
+        function guess_gift() {
+            const guess = document.getElementById("gift_guess_input").value.toLowerCase();
+            const words_to_find = ["concert", "yves", "jamait"];
+            
+            // Check if guess contains all words in words_to_find
+            const is_correct = words_to_find.every(word => guess.includes(word));
+            
+            if (is_correct) {
+                document.getElementById("gift_guess_result").innerText = "Joyeux anniversaire !";
+                document.querySelector("img").style.display = "block";
+            } else {
+                document.getElementById("gift_guess_result").innerText = "Désolé, ce n'est pas ça. Essaye encore !";
+            }
+        }
+
+        // make a list of all the input fields in the crossword
+        const crosswordInputs = document.querySelectorAll('.crossword-letter input');
+
+        // Add event listener for left and right arrow keys to navigate the crossword
+        document.addEventListener('keydown', function(event) {
+            const activeElement = document.activeElement;
+            if (activeElement.tagName === 'INPUT' && activeElement.parentElement.classList.contains('crossword-letter')) {
+                if (event.key === 'ArrowLeft') {
+                    console.log('ArrowLeft pressed');
+                    const currentIndex = Array.from(crosswordInputs).indexOf(activeElement);
+                    const prevInput = crosswordInputs[currentIndex - 1];
+                    if (prevInput) prevInput.focus();
+                } else if (event.key === 'ArrowRight') {
+                    console.log('ArrowRight pressed');
+                    // find current position in the crosswordInputs list
+                    const currentIndex = Array.from(crosswordInputs).indexOf(activeElement);
+                    const nextInput = crosswordInputs[currentIndex + 1];
+                    if (nextInput) nextInput.focus();
+                }
+            }
+        });
+    </script>
+{% endblock %}

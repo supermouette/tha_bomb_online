@@ -409,3 +409,22 @@ def get_histogram_bet(request, name_hash):
     return JsonResponse(
         {"histogram": list(histogram), "user_bet_bucket": user_bet_bucket}
     )
+
+
+def birthday(request):
+    from game.models import NameToGuess
+
+    currentDate = datetime.date.today()
+
+    name_to_guess_query = list(NameToGuess.objects.filter(guess_date=currentDate))
+    name_to_guess = name_to_guess_query[0].name
+
+    guess_context = {
+        "guess_is_active": True,
+        "guess_word_length_range": range(len(name_to_guess)),
+        "guess_max_try_range": range(5),
+        "guess_first_letter": name_to_guess[0].upper(),
+        "names_guessed": [],
+    }
+
+    return render(request, "game/birthday.html", {**guess_context})

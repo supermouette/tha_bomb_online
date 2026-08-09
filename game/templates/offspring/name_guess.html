@@ -1,5 +1,5 @@
 
-<h1>Devinez le prénom</h1>
+<h1>Devine le <!-- prénom --> mot !</h1>
 {% if guess_finished %}
 <p> Le jeu est terminé, le vrai prénom se cache parmis les {{names_guessed|length}} prénoms devinés</p>
 <p> Vous pouvez désormais choisir votre top 3 !</p>
@@ -41,7 +41,7 @@
     <button id="send_top_button" onclick="vote_name_guess()">Je vote</button>
 </p>
 {% else %}
-<p>Du 16 Novembre au 16 Décembre,<br> un prenom par jour à deviner. <br>Le vrai prénom se cache dans la liste...</p>
+<!-- <p>Du 16 Novembre au 16 Décembre,<br> un prenom par jour à deviner. <br>Le vrai prénom se cache dans la liste...</p> -->
 {% endif %}
 {% if guess_is_active %}
 <table id="name_guess_table">
